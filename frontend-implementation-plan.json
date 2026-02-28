@@ -1,0 +1,521 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Maplewood Canada Open-World Life Sim — Roblox-Style Homepage + 3D Game",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Build Roblox-style homepage with TRXGAMING branding and game card",
+      "acceptanceCriteria": [
+        "Homepage renders a TRXGAMING-branded header with logo and navigation",
+        "A single game card for 'Maplewood Canada' is displayed with thumbnail, title, and play count",
+        "Clicking 'Play' transitions the user into the 3D game view",
+        "Dark gaming theme with neon accents is consistently applied"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "create",
+          "description": "Create the homepage with TRXGAMING branding, featuring a dark gaming aesthetic with neon orange/red accents. Include a header with the TRXGAMING logo (frontend/public/assets/generated/trxgaming-logo.dim_400x120.png), navigation bar with search and user avatar placeholder. Display a hero banner (frontend/public/assets/generated/hero-banner.dim_1600x600.png) and a featured game card for 'Maplewood Canada' with the thumbnail (frontend/public/assets/generated/maplewood-thumbnail.dim_800x450.png), title, play count, and a large 'Play' button that navigates to the GameView."
+        },
+        {
+          "path": "frontend/src/components/GameCard.tsx",
+          "operation": "create",
+          "description": "Create a reusable game card component displaying game thumbnail, title, play count, and Play button with hover glow effects matching the Roblox gaming aesthetic."
+        },
+        {
+          "path": "frontend/src/components/Header.tsx",
+          "operation": "create",
+          "description": "Create a persistent header component with TRXGAMING logo, search bar, and user avatar/login button. Use the authorization component to display login/logout state and user profile name when authenticated."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire HomePage as the default route ('/') and add a route to GameView ('/play'). Ensure the authorization component's login flow and profile setup modal are integrated properly before showing application content."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Render large open-world 3D map with multiple biomes using Three.js",
+      "acceptanceCriteria": [
+        "3D world renders with distinct zones: city, neighborhood, mountains, forest, rivers, lakes",
+        "Terrain transitions naturally between biomes",
+        "Ski resort is visible in mountain area",
+        "Swimming resort and lakes are present",
+        "Forest contains tree meshes that respond to chop interactions",
+        "Airport area is identifiable on the map"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/three/World.tsx",
+          "operation": "create",
+          "description": "Create the main 3D world container using React Three Fiber. Render the terrain with multiple biomes: downtown Maplewood city, Mapleville neighborhood, mountain ranges with ski resort, dense forests with choppable trees, rivers, lakes, and a swimming resort. Use procedural terrain generation with LOD and fog for distance simulation. Use the forest-tile.dim_512x512.png texture for forest ground and ski-resort.dim_800x450.png as a reference for mountain scenery."
+        },
+        {
+          "path": "frontend/src/components/three/Terrain.tsx",
+          "operation": "create",
+          "description": "Create terrain mesh component with biome transitions. Generate heightmaps for mountains, flat areas for city/neighborhood, and water bodies for rivers/lakes. Apply appropriate textures per biome zone."
+        },
+        {
+          "path": "frontend/src/components/three/BiomeZones.tsx",
+          "operation": "create",
+          "description": "Create distinct biome zone components: CityZone, NeighborhoodZone, MountainZone, ForestZone, WaterZone. Each zone includes appropriate 3D models (buildings, trees, rocks, water planes) and landmark meshes (ski resort lodge, airport terminal, swimming resort)."
+        },
+        {
+          "path": "frontend/src/components/three/ChoppableTree.tsx",
+          "operation": "create",
+          "description": "Create an interactive tree mesh component that responds to player chop interactions. On interaction, play a falling animation and remove the tree from the scene."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Implement player character controller with camera modes and interaction system",
+      "acceptanceCriteria": [
+        "Player can switch between first-person and third-person camera with a keybind or button",
+        "WASD / arrow key movement works in both modes",
+        "Interaction prompt appears when near interactable objects (food, drinks, doors, NPCs, vehicles)",
+        "Player can pick up, consume, and interact with world items",
+        "Superhuman/flight mode can be toggled from a settings or ability menu",
+        "Player can swim in water bodies"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/three/PlayerController.tsx",
+          "operation": "create",
+          "description": "Create the player character controller with WASD/arrow key movement, jump, run, swim, and flight mechanics. Include camera toggle between first-person and third-person modes (keybind 'V'). Implement raycasting for detecting interactable objects and display interaction prompts."
+        },
+        {
+          "path": "frontend/src/components/three/PlayerCamera.tsx",
+          "operation": "create",
+          "description": "Create camera component that supports first-person and third-person perspectives. In first-person, attach camera to player head position. In third-person, position camera behind and above the player with orbit controls."
+        },
+        {
+          "path": "frontend/src/hooks/usePlayerInput.ts",
+          "operation": "create",
+          "description": "Create a hook to manage keyboard/mouse input for player movement, interactions, camera toggle, and ability activation (flight mode). Return input state consumed by PlayerController."
+        },
+        {
+          "path": "frontend/src/components/InteractionPrompt.tsx",
+          "operation": "create",
+          "description": "Create UI overlay component that displays interaction prompts (e.g., 'Press E to pick up', 'Press F to drink') when the player is near interactable objects. Position the prompt near the object in screen space."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Populate world with hundreds of NPCs with AI behavior and dialogue",
+      "acceptanceCriteria": [
+        "At least representative NPC types render across the map: civilians, workers, shop owners, party-goers",
+        "Each NPC type has unique dialogue and behavioral routines",
+        "Killing or attacking NPCs triggers a reinforcement/alert response from nearby NPCs",
+        "NPCs are present inside enterable buildings and houses",
+        "NPCs navigate with basic pathfinding (avoid obstacles, enter/exit buildings)"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/three/NPC.tsx",
+          "operation": "create",
+          "description": "Create NPC component with 3D character mesh, AI behavior state machine (walking, working, socializing, fleeing, fighting), and dialogue system. NPCs should have distinct routines based on their role (civilian, worker, shop owner, party-goer)."
+        },
+        {
+          "path": "frontend/src/components/three/NPCManager.tsx",
+          "operation": "create",
+          "description": "Create NPC manager that spawns hundreds of NPCs across the map in appropriate zones (city streets, buildings, party venues). Handle NPC lifecycle, reinforcement spawning when NPCs are killed, and alert propagation to nearby NPCs."
+        },
+        {
+          "path": "frontend/src/utils/npcAI.ts",
+          "operation": "create",
+          "description": "Create AI utilities for NPC pathfinding (A* or navmesh-based), behavior state transitions (idle, walk, flee, attack), and dialogue selection based on NPC type and interaction context."
+        },
+        {
+          "path": "frontend/src/components/DialogueBox.tsx",
+          "operation": "create",
+          "description": "Create dialogue box UI component displayed when the player interacts with an NPC. Show NPC name, portrait, and dialogue text with response options if applicable."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Implement AI-driven animals and choppable trees across biomes",
+      "acceptanceCriteria": [
+        "Multiple animal types render in appropriate biomes",
+        "Passive animals flee when the player approaches",
+        "Dangerous animals (e.g. bear, wolf) attack the player within aggro range",
+        "Trees in the forest have a chop interaction that plays a falling animation and removes the tree"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/three/Animal.tsx",
+          "operation": "create",
+          "description": "Create animal component with different species (deer, birds, fish, bears, wolves). Implement AI behavior: passive animals flee from player, dangerous animals have aggro range and attack behavior. Spawn animals in appropriate biomes (forest, mountain, lakes)."
+        },
+        {
+          "path": "frontend/src/components/three/AnimalManager.tsx",
+          "operation": "create",
+          "description": "Create animal manager that spawns and manages animals across the map. Handle animal lifecycle, respawning, and removal when killed."
+        },
+        {
+          "path": "frontend/src/utils/animalAI.ts",
+          "operation": "create",
+          "description": "Create AI utilities for animal pathfinding, flee behavior, aggro detection, and attack patterns for dangerous species."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Implement life-simulation system with jobs, homes, families, and stats",
+      "acceptanceCriteria": [
+        "Player can select a job from a job board or career menu",
+        "Hunger and thirst stats are tracked and displayed in a HUD",
+        "Player can own a home and access a basic interior customization menu",
+        "Family/relationship status with NPCs can be formed through interactions",
+        "Job-specific activities (patrol route for police, test drives for dealership) are functional"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/JobBoard.tsx",
+          "operation": "create",
+          "description": "Create job board UI component listing available careers: police officer, SWAT, first responder, dealership worker. Allow player to select a job, which calls the backend updateJob method. Display current job from player profile."
+        },
+        {
+          "path": "frontend/src/components/HomeCustomization.tsx",
+          "operation": "create",
+          "description": "Create home customization UI allowing player to purchase a home (via purchaseHome backend method) and upgrade customization level (via customizeHome). Display owned home details from player profile."
+        },
+        {
+          "path": "frontend/src/components/RelationshipManager.tsx",
+          "operation": "create",
+          "description": "Create relationship manager UI showing player's family and friend NPCs. Allow player to form relationships through NPC interactions (calls addRelationship backend method)."
+        },
+        {
+          "path": "frontend/src/hooks/usePlayerStats.ts",
+          "operation": "create",
+          "description": "Create a hook to track and manage player stats (hunger, thirst, health). Stats decrease over time and can be replenished by eating/drinking items in the world. Return stat values for HUD display."
+        },
+        {
+          "path": "frontend/src/components/HUD.tsx",
+          "operation": "modify",
+          "description": "Modify HUD component to display hunger, thirst, and health bars using data from usePlayerStats hook. Use the hud-panel.dim_512x128.png as the HUD background panel."
+        },
+        {
+          "path": "frontend/src/components/three/JobActivities.tsx",
+          "operation": "create",
+          "description": "Create job-specific activity components: police patrol routes with waypoints, dealership test drive interactions, first responder emergency calls. Activate based on player's current job from profile."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Implement police, SWAT, and first responder career paths",
+      "acceptanceCriteria": [
+        "Player can enroll as police officer, SWAT member, or first responder from a career selection screen",
+        "Police officers have a defined patrol route with waypoints on the map",
+        "SWAT role is unlocked during high-crime events",
+        "First responders receive emergency call notifications",
+        "Role-specific uniforms, vehicles, and equipment are assigned on role selection"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/three/PolicePatrol.tsx",
+          "operation": "create",
+          "description": "Create police patrol route component with waypoints marked on the map. When player is a police officer, display patrol route and track completion."
+        },
+        {
+          "path": "frontend/src/components/three/SWATMission.tsx",
+          "operation": "create",
+          "description": "Create SWAT mission component triggered during high-crime events (high wanted level). Display mission objectives and spawn SWAT vehicles/equipment."
+        },
+        {
+          "path": "frontend/src/components/EmergencyCall.tsx",
+          "operation": "create",
+          "description": "Create emergency call notification UI for first responder role. Display call location on mini-map and mission details (fire, medical emergency)."
+        },
+        {
+          "path": "frontend/src/components/three/RoleEquipment.tsx",
+          "operation": "create",
+          "description": "Create component that assigns role-specific uniforms, vehicles, and equipment when player selects a career. Update player character appearance and inventory."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Implement criminal gameplay system with wanted level and police response",
+      "acceptanceCriteria": [
+        "Player can interact with NPCs to rob them",
+        "Explosives and weapons can be used to cause destruction in the world",
+        "A wanted level indicator (stars or similar) escalates with criminal acts",
+        "Higher wanted levels spawn more aggressive police/SWAT NPC responses",
+        "Violence toggle in settings can restrict gore/violent content"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useWantedLevel.ts",
+          "operation": "create",
+          "description": "Create a hook to track player's wanted level (0-5 stars). Wanted level increases with criminal acts (robbery, assault, explosions). Higher levels trigger police/SWAT NPC spawns. Wanted level decreases over time when player evades police."
+        },
+        {
+          "path": "frontend/src/components/WantedLevelIndicator.tsx",
+          "operation": "create",
+          "description": "Create wanted level indicator UI displaying 1-5 stars in the HUD. Show active wanted level with filled stars and escalation animation."
+        },
+        {
+          "path": "frontend/src/components/three/CriminalActions.tsx",
+          "operation": "create",
+          "description": "Create component handling criminal interactions: robbery (steal from NPCs), weapon attacks, explosive usage. Each action increments wanted level and triggers NPC/police responses."
+        },
+        {
+          "path": "frontend/src/components/three/PoliceResponse.tsx",
+          "operation": "create",
+          "description": "Create police response system that spawns police/SWAT NPCs based on wanted level. Higher levels spawn more aggressive units with better equipment. Police chase and attack player."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Implement comprehensive vehicle system with land, sea, and air vehicles",
+      "acceptanceCriteria": [
+        "At least one land, one sea, and one air vehicle type are drivable by the player",
+        "Car dealership building is enterable and displays purchasable vehicles",
+        "Player can take a job as a dealership worker",
+        "Airport has a runway and supports aircraft takeoff/landing mechanics",
+        "Vehicles have basic physics (acceleration, turning, collision)"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/three/Vehicle.tsx",
+          "operation": "create",
+          "description": "Create vehicle component with physics-based movement for land (cars, trucks, motorcycles), sea (boats, jet skis), and air (helicopters, planes). Include acceleration, turning, braking, and collision detection. Player can enter/exit vehicles."
+        },
+        {
+          "path": "frontend/src/components/three/VehicleManager.tsx",
+          "operation": "create",
+          "description": "Create vehicle manager that spawns vehicles across the map (parked cars, boats at docks, planes at airport). Handle vehicle lifecycle and player-vehicle interaction."
+        },
+        {
+          "path": "frontend/src/components/three/Dealership.tsx",
+          "operation": "create",
+          "description": "Create car dealership building interior with vehicle showroom. Display purchasable vehicles and allow player to browse and buy. If player has dealership job, enable test drive interactions."
+        },
+        {
+          "path": "frontend/src/components/three/Airport.tsx",
+          "operation": "create",
+          "description": "Create airport zone with runway, terminal building, and parked aircraft. Support takeoff/landing mechanics for planes and helicopters."
+        },
+        {
+          "path": "frontend/src/hooks/useVehiclePhysics.ts",
+          "operation": "create",
+          "description": "Create a hook to manage vehicle physics simulation using Cannon.js or similar. Handle acceleration, steering, terrain interaction, and collision response for different vehicle types."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Make every building and house enterable with NPC occupants and interiors",
+      "acceptanceCriteria": [
+        "Entering any building transitions seamlessly to an interior scene",
+        "Each interior type (home, shop, hotel, police station) has a unique layout",
+        "NPCs are present and active inside interiors",
+        "Interactive objects (sit, eat, pick up) exist inside buildings",
+        "Player can exit buildings and return to the open world"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/three/Building.tsx",
+          "operation": "create",
+          "description": "Create building component with entrance interaction. When player interacts with a building entrance, transition to interior scene with appropriate layout (home, shop, hotel, police station, dealership)."
+        },
+        {
+          "path": "frontend/src/components/three/BuildingInterior.tsx",
+          "operation": "create",
+          "description": "Create interior scene component with room layouts, furniture, interactive objects (chairs, food items, appliances), and NPC occupants. Different interior templates for each building type."
+        },
+        {
+          "path": "frontend/src/components/three/InteriorObjects.tsx",
+          "operation": "create",
+          "description": "Create interactive interior objects: chairs (sit), food items (eat), drinks (consume), doors (enter/exit), appliances. Each object has an interaction type and callback."
+        },
+        {
+          "path": "frontend/src/utils/buildingManager.ts",
+          "operation": "create",
+          "description": "Create utilities to manage building state: which buildings exist on the map, their interior layouts, NPC occupants, and transition logic between exterior and interior scenes."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Implement weapons, accessories, and superhuman abilities system",
+      "acceptanceCriteria": [
+        "Inventory UI shows equipped weapons and accessories",
+        "At least one weapon from each era (historical, modern, futuristic) is available",
+        "Weapons have distinct attack animations and effects",
+        "Accessories can be equipped and visually appear on the player character",
+        "Superhuman ability (flight, super speed, etc.) can be toggled from inventory or ability menu"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/InventoryUI.tsx",
+          "operation": "create",
+          "description": "Create inventory UI displaying equipped weapons, accessories, and superhuman abilities. Allow player to select and equip items. Show weapon stats and ability status."
+        },
+        {
+          "path": "frontend/src/components/three/Weapon.tsx",
+          "operation": "create",
+          "description": "Create weapon component with attack animations and effects for melee (swords, clubs), firearms (pistols, rifles), and explosives (grenades, rockets). Include weapons from historical (sword, bow), modern (pistol, rifle), and futuristic (laser gun, plasma cannon) eras."
+        },
+        {
+          "path": "frontend/src/components/three/Accessories.tsx",
+          "operation": "create",
+          "description": "Create accessories component for clothing, armor, and gadgets. Accessories visually attach to player character mesh and can provide stat bonuses or abilities."
+        },
+        {
+          "path": "frontend/src/hooks/useInventory.ts",
+          "operation": "create",
+          "description": "Create a hook to manage player inventory state: owned weapons, accessories, and abilities. Handle equip/unequip, item usage, and persistence. Return inventory data for UI and gameplay."
+        },
+        {
+          "path": "frontend/src/components/AbilityMenu.tsx",
+          "operation": "create",
+          "description": "Create ability menu UI for toggling superhuman abilities (flight, super speed, invincibility). Display active abilities and cooldowns."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Build social features system with friends, chat, and voice indicators",
+      "acceptanceCriteria": [
+        "Player profile page shows username, avatar, and friends list",
+        "Send/accept/remove friend requests is functional",
+        "Text chat UI is always accessible with a chat bubble toggle",
+        "Voice chat status indicator shows which players have mic active",
+        "Friends can be invited to join the same game session"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ProfilePage.tsx",
+          "operation": "create",
+          "description": "Create player profile page displaying username, avatar (from player profile's avatarUrl), friends list, and current job. Allow player to update their avatar using the updateAvatar backend method. Use the authorization component's getUserProfile to fetch other players' profiles."
+        },
+        {
+          "path": "frontend/src/components/FriendsList.tsx",
+          "operation": "create",
+          "description": "Create friends list UI component showing player's friends from the player profile's relationships. Allow sending friend requests (addFriend backend method), accepting requests, and removing friends (removeFriend). Display friend online status and invite to session button."
+        },
+        {
+          "path": "frontend/src/components/ChatUI.tsx",
+          "operation": "create",
+          "description": "Create text chat UI with global and proximity channels. Chat input field, message history, and chat bubble toggle button. Display player names with messages. Store chat messages in client-side state."
+        },
+        {
+          "path": "frontend/src/components/VoiceChatIndicator.tsx",
+          "operation": "create",
+          "description": "Create voice chat status indicator UI showing which nearby players have microphone active. Display speaker icon next to player names in the HUD. Note: Actual voice audio transport is not implemented."
+        },
+        {
+          "path": "frontend/src/components/PlayerSearch.tsx",
+          "operation": "create",
+          "description": "Create player search UI using the getSearchableProfiles backend method to find other players by name. Display search results with option to view profile or send friend request."
+        },
+        {
+          "path": "frontend/src/hooks/useFriends.ts",
+          "operation": "create",
+          "description": "Create a hook to manage friend operations using backend methods: addFriend, removeFriend, getFriendsList. Return friend list and mutation functions for adding/removing friends."
+        }
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "summary": "Implement settings panel with violence toggle, camera mode, and persistence",
+      "acceptanceCriteria": [
+        "Settings panel is accessible from both the homepage and in-game pause menu",
+        "Violence toggle disables/enables blood and explicit combat visuals",
+        "Camera mode default persists across sessions",
+        "Settings are saved to the backend and restored on next login"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/SettingsPanel.tsx",
+          "operation": "create",
+          "description": "Create settings panel UI accessible from both homepage and in-game pause menu. Include controls for violence toggle (boolean), camera mode default (first-person/third-person), graphics quality (low/medium/high), chat preferences (enabled/disabled), and control scheme (keyboard layout). Use the authorization component to ensure user is logged in before showing settings. Fetch settings from backend using getSettings and save changes using updateSettings."
+        },
+        {
+          "path": "frontend/src/hooks/useSettings.ts",
+          "operation": "create",
+          "description": "Create a hook to fetch and update player settings using backend methods: getSettings and updateSettings. Return settings state and mutation function. Apply settings to game state (violence mode, camera default)."
+        },
+        {
+          "path": "frontend/src/components/PauseMenu.tsx",
+          "operation": "create",
+          "description": "Create in-game pause menu UI (accessed by ESC key) with options: Resume, Settings, Exit to Homepage. Wire the Settings option to open SettingsPanel."
+        }
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "summary": "Implement social event locations with parties, pools, and activities",
+      "acceptanceCriteria": [
+        "At least one active party venue renders with crowd NPCs and ambiance",
+        "Pool area is accessible with swimming interaction",
+        "Ski resort has skiable slopes with player ski mechanic",
+        "Hotel lobbies are enterable with check-in NPC",
+        "Party locations include interactive food/drink props"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/three/PartyVenue.tsx",
+          "operation": "create",
+          "description": "Create party venue locations (indoor clubs, outdoor events) with crowd NPCs, music ambiance, dance floor, and interactive props (drinks, food). Include pool party areas with swimming zones."
+        },
+        {
+          "path": "frontend/src/components/three/SkiResort.tsx",
+          "operation": "create",
+          "description": "Create ski resort zone in the mountain area with ski lodge building, skiable slopes, and ski lift. Implement player skiing mechanic with downhill physics. Reference the ski-resort.dim_800x450.png for visual design."
+        },
+        {
+          "path": "frontend/src/components/three/Hotel.tsx",
+          "operation": "create",
+          "description": "Create hotel building with enterable lobby, check-in desk NPC, and event rooms hosting parties. Include interactive amenities (pool, restaurant, bar)."
+        },
+        {
+          "path": "frontend/src/components/three/PoolArea.tsx",
+          "operation": "create",
+          "description": "Create swimming pool and beach resort areas with water planes, lounge chairs, and NPCs. Support player swimming interaction."
+        }
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "summary": "Apply bold gaming visual theme across entire frontend",
+      "acceptanceCriteria": [
+        "Homepage uses dark background with neon-orange/red accent colors consistently",
+        "Typography is bold and gaming-style throughout",
+        "In-game HUD displays health bar, hunger, thirst, wanted stars, mini-map, and inventory slot",
+        "UI hover states include glow or highlight animations",
+        "The overall aesthetic is cohesive from homepage to gameplay screen"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Define global CSS variables for the dark gaming theme: background colors (dark grays/blacks), neon accent colors (orange #FF6600, red #FF0000), bold gaming fonts (e.g., 'Orbitron', 'Exo 2', sans-serif). Apply these variables site-wide."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend Tailwind theme with custom gaming colors (neon-orange, neon-red, dark-bg, panel-bg) and font families. Define animation utilities for glow effects and slide-ins."
+        },
+        {
+          "path": "frontend/src/components/HUD.tsx",
+          "operation": "create",
+          "description": "Create in-game HUD overlay displaying health bar, hunger bar, thirst bar, wanted level stars, mini-map (using minimap-bg.dim_256x256.png as background), and equipped inventory slot. Use hud-panel.dim_512x128.png as the HUD panel background. Style with dark theme and neon accents."
+        },
+        {
+          "path": "frontend/src/components/MiniMap.tsx",
+          "operation": "create",
+          "description": "Create mini-map component displaying a top-down view of the player's surroundings. Use minimap-bg.dim_256x256.png as the background texture. Show player position, nearby landmarks, and objectives."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "frontend/src/App.tsx": "Root app component that manages home/game view switching, profile setup modal, and wraps everything in ThemeProvider and Toaster.",
+  "frontend/src/pages/HomePage.tsx": "Roblox-style TRXGAMING homepage with hero banner, featured game card for Maplewood Canada, stats, features grid, and footer with caffeine.ai attribution.",
+  "frontend/src/pages/GameView.tsx": "Full-screen 3D game view using React Three Fiber Canvas with HUD, chat, pause menu, inventory, job board, and all game state management.",
+  "frontend/src/components/HUD.tsx": "In-game HUD overlay with health/armor/hunger/thirst stat bars, wanted level indicator, mini-map, equipped item slot, and job label — uses LucideIcon type for proper icon prop typing.",
+  "frontend/src/components/three/World.tsx": "Main 3D world scene container with sky, stars, fog (via primitive), lighting, terrain, biome zones, NPCs, animals, and vehicles — removed invalid Fog import from drei.",
+  "frontend/src/components/three/BiomeZones.tsx": "Complete biome zones component rendering city buildings, neighborhood houses, forest trees (choppable), ski resort, airport runway, pool resort, lake, river, party venue, hotel, police station, and dealership with proper useMemo for tree positions.",
+  "frontend/src/components/three/NPCManager.tsx": "NPC manager that spawns and animates 60+ NPCs across the map with role-based AI behavior, state machines (walking/fleeing/dancing/patrolling), and click-to-dialogue interaction.",
+  "frontend/src/components/three/AnimalManager.tsx": "Animal AI manager spawning deer, wolves, bears, birds, and fish with state-machine behavior — fixes the TypeScript narrowing error by restructuring the update logic so each branch declares its own speed variable and movement is applied unconditionally for all active states.",
+  "frontend/src/components/three/VehicleManager.tsx": "Vehicle manager rendering parked cars, trucks, helicopter, plane, and boats across the map with hover labels and click-to-enter interaction.",
+  "frontend/src/components/three/PlayerController.tsx": "Player character controller with WASD movement, mouse-look via pointer lock, gravity/jump physics, flight mode, and first/third person camera switching."
+}

@@ -1,0 +1,234 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Roblox-style homepage (TRXGAMING branding) with a single playable open-world game set in Maplewood, Canada. Massive map featuring the city of Maplewood and neighborhood Mapleville, surrounded by mountains, forests, rivers, lakes, and a ski resort. Full life-sim with eating, drinking, jobs, families, homes, and social interactions. Hundreds of realistic NPCs with unique behaviors, dialogue, and AI. Animals (some dangerous). Player can be law-abiding or criminal (robbery, violence, explosions). Social features: friend system, voice/text chat, multiplayer. Large vehicle roster (land/air/sea), airport, dealerships (workable). Every building/house enterable. Police, SWAT, first responder careers. Weapons, accessories across eras. Superhuman abilities and flight. First/third person toggle. Violence toggle setting. Brookhaven-style but more realistic housing.",
+  "architectural_notes": [
+    "Game is browser/web-based with a Roblox-style launcher homepage; only one game title (Maplewood) accessible via Play button",
+    "Open world requires chunked/streamed map loading due to massive size (city + mountains + forests + water)",
+    "NPC AI system must support unique behaviors, dialogue trees, threat response, and role-based schedules",
+    "Multiplayer infrastructure needed: real-time sync, voice chat, friend/social graph, text chat"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- TRXGAMING logo badge — bold blocky text 'TRXGAMING' on a dark background with neon orange glow (trxgaming-logo.dim_400x120.png)\n- Maplewood Canada game thumbnail — aerial view of a Canadian city with mountains, forest, and a river at golden hour (maplewood-thumbnail.dim_800x450.png)\n- Homepage hero banner — wide dark cityscape of Maplewood at night with neon lights and mountains in the background (hero-banner.dim_1600x600.png)\n- Mini-map background texture — dark stylized top-down city grid overlay (minimap-bg.dim_256x256.png)\n- Forest biome environment tile — dense green pine trees on dark ground, tiling texture (forest-tile.dim_512x512.png)\n- Mountain ski resort scenery — snowy mountain peaks with ski lodge and slopes (ski-resort.dim_800x450.png)\n- Player HUD health/stat bar background — dark semi-transparent panel with neon orange outlines (hud-panel.dim_512x128.png)",
+  "existing_features": [
+    {
+      "id": "feature-build-a-roblox-style-homepage-with-trxgaming-branding-display-a-featured-game-card-for-maplewood-canada-with-a-thumbnail-title-play-count-and-a-large-play-button-style-the-homepage-with-a-dark-gaming-aesthetic-matching-roblox-s-trxgaming-creator-page-bold-fonts-neon-accent-colors-animated-banners-and-a-navigation-bar-with-logo-search-and-user-avatar-placeholder",
+      "title": "Build a Roblox-style homepage with TRXGAMING branding. Display a featured game card for 'Maplewood Canada' with a thumbnail, title, play count, and a large 'Play' button. Style the homepage with a dark gaming aesthetic matching Roblox's TRXGAMING creator page: bold fonts, neon accent colors, animated banners, and a navigation bar with logo, search, and user avatar placeholder.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-render-a-large-open-world-3d-map-using-three-js-react-three-fiber-representing-maplewood-canada-the-map-must-include-the-city-of-maplewood-downtown-commercial-blocks-airport-the-neighborhood-mapleville-mountain-ranges-surrounding-the-town-with-a-ski-resort-dense-forests-with-choppable-trees-rivers-lakes-and-a-swimming-beach-resort-area-the-world-should-feel-vast-use-procedural-terrain-fog-of-distance-and-lod-techniques-to-simulate-miles-of-explorable-land",
+      "title": "Render a large open-world 3D map using Three.js / React Three Fiber representing Maplewood, Canada. The map must include: the city of Maplewood (downtown, commercial blocks, airport), the neighborhood Mapleville, mountain ranges surrounding the town with a ski resort, dense forests with choppable trees, rivers, lakes, and a swimming/beach resort area. The world should feel vast — use procedural terrain, fog of distance, and LOD techniques to simulate miles of explorable land.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-player-character-controller-with-first-person-and-third-person-camera-toggle-keyboard-shortcut-or-ui-button-the-player-must-be-able-to-walk-run-jump-swim-fly-superhuman-mode-toggle-drive-vehicles-and-perform-interaction-actions-pick-up-objects-drink-consumables-eat-food-touch-interact-with-world-objects-and-npcs",
+      "title": "Implement a player character controller with first-person and third-person camera toggle (keyboard shortcut or UI button). The player must be able to walk, run, jump, swim, fly (superhuman mode toggle), drive vehicles, and perform interaction actions: pick up objects, drink consumables, eat food, touch/interact with world objects and NPCs.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-populate-the-world-with-hundreds-of-npcs-each-with-distinct-ai-behavior-dialogue-lines-and-daily-routines-eating-working-walking-socializing-attending-parties-when-some-npcs-are-killed-reinforcement-npcs-spawn-and-react-flee-fight-back-or-call-for-help-depending-on-their-role-npcs-inside-every-building-and-house-must-be-present-and-active",
+      "title": "Populate the world with hundreds of NPCs, each with distinct AI behavior, dialogue lines, and daily routines (eating, working, walking, socializing, attending parties). When some NPCs are killed, reinforcement NPCs spawn and react (flee, fight back, or call for help depending on their role). NPCs inside every building and house must be present and active.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-ai-driven-animals-across-the-forest-mountain-and-lake-zones-some-animals-are-passive-deer-birds-fish-and-some-are-dangerous-bears-wolves-animals-roam-flee-from-the-player-or-attack-depending-on-their-type-and-proximity-include-choppable-trees-in-the-forest-that-fall-when-interacted-with",
+      "title": "Implement AI-driven animals across the forest, mountain, and lake zones. Some animals are passive (deer, birds, fish) and some are dangerous (bears, wolves). Animals roam, flee from the player, or attack depending on their type and proximity. Include choppable trees in the forest that fall when interacted with.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-life-simulation-system-allowing-the-player-to-take-on-jobs-police-officer-swat-dealership-worker-first-responder-and-others-own-and-customize-a-home-brookhaven-inspired-but-more-realistic-have-family-relationships-with-npcs-eat-and-drink-to-manage-hunger-thirst-stats-and-engage-in-everyday-human-activities",
+      "title": "Implement a life-simulation system allowing the player to: take on jobs (police officer, SWAT, dealership worker, first responder, and others), own and customize a home (Brookhaven-inspired but more realistic), have family relationships with NPCs, eat and drink to manage hunger/thirst stats, and engage in everyday human activities.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-criminal-and-chaotic-gameplay-system-players-can-rob-npcs-and-stores-acquire-weapons-and-explosives-commit-violent-acts-and-cause-chaos-include-a-wanted-alert-level-system-that-escalates-police-npc-responses-as-the-player-commits-crimes",
+      "title": "Implement a criminal and chaotic gameplay system: players can rob NPCs and stores, acquire weapons and explosives, commit violent acts, and cause chaos. Include a wanted/alert level system that escalates police NPC responses as the player commits crimes.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-comprehensive-vehicle-system-with-land-vehicles-cars-trucks-motorcycles-sea-vehicles-boats-jet-skis-and-air-vehicles-helicopters-planes-include-a-car-dealership-building-where-the-player-can-browse-purchase-and-optionally-work-as-an-employee-the-airport-supports-plane-and-helicopter-takeoff-landing",
+      "title": "Implement a comprehensive vehicle system with land vehicles (cars, trucks, motorcycles), sea vehicles (boats, jet skis), and air vehicles (helicopters, planes). Include a car dealership building where the player can browse, purchase, and optionally work as an employee. The airport supports plane and helicopter takeoff/landing.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-weapons-and-accessories-system-spanning-multiple-time-periods-historical-modern-futuristic-include-melee-weapons-firearms-explosives-and-superhuman-abilities-players-can-equip-accessories-clothing-armor-gadgets-display-an-inventory-loadout-ui-for-managing-equipped-items",
+      "title": "Implement a weapons and accessories system spanning multiple time periods (historical, modern, futuristic). Include melee weapons, firearms, explosives, and superhuman abilities. Players can equip accessories (clothing, armor, gadgets). Display an inventory/loadout UI for managing equipped items.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-social-features-system-including-a-friends-list-add-remove-players-a-social-feed-or-profile-page-per-player-in-game-text-chat-global-and-proximity-and-a-voice-chat-indicator-ui-the-social-system-should-feel-like-an-in-game-social-network-similar-to-roblox-s-friend-system",
+      "title": "Build a social features system including: a friends list (add/remove players), a social feed or profile page per player, in-game text chat (global and proximity), and a voice chat indicator UI. The social system should feel like an in-game social network similar to Roblox's friend system.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-settings-panel-accessible-from-the-main-menu-and-in-game-pause-menu-settings-must-include-violence-toggle-on-off-camera-mode-default-first-third-person-graphics-quality-chat-preferences-and-controls-remapping-persist-player-settings-in-backend-stable-storage",
+      "title": "Implement a settings panel accessible from the main menu and in-game pause menu. Settings must include: violence toggle (on/off), camera mode default (first/third person), graphics quality, chat preferences, and controls remapping. Persist player settings in backend stable storage.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-bold-immersive-gaming-visual-theme-across-the-entire-frontend-use-a-dark-background-palette-with-vibrant-neon-orange-and-red-accent-colors-blocky-futuristic-typography-animated-ui-elements-hover-glows-slide-ins-and-a-hud-overlay-during-gameplay-showing-health-hunger-thirst-wanted-level-mini-map-and-equipped-item-the-style-should-evoke-a-high-energy-roblox-meets-gta-aesthetic",
+      "title": "Apply a bold, immersive gaming visual theme across the entire frontend. Use a dark background palette with vibrant neon-orange and red accent colors, blocky/futuristic typography, animated UI elements (hover glows, slide-ins), and a HUD overlay during gameplay showing health, hunger, thirst, wanted level, mini-map, and equipped item. The style should evoke a high-energy Roblox-meets-GTA aesthetic.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Roblox-style homepage with TRXGAMING branding and single Play button",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Massive open-world map: city of Maplewood + neighborhood Mapleville, mountains, forests, rivers, lakes",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Full life-sim: eating, drinking, jobs, families, homes, daily human activities",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Hundreds of realistic NPCs with unique AI behaviors, dialogue, responsibilities; reinforcements arrive when some are killed",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Animals with AI; some dangerous; trees to chop; nature interactions",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Criminal and chaotic gameplay: robbery, weapons, explosions, killing; violence toggle setting",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Social features: friend/add system, multiplayer, voice chat and text chat",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Large vehicle roster (land, air, sea); airport; car dealership (player can work there)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Every building and house is enterable with NPCs inside",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Police officer, SWAT team, first responder career paths with patrol mechanics",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Weapons and accessories from multiple time periods; superhuman abilities and flight",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "First-person / third-person camera toggle; pick up, drink, and touch objects",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Ski resort, swimming resort, hotels, pools, parties in the game world",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Brookhaven-inspired but more realistic housing system; customizable homes",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Implement police officer, SWAT team, and first responder career paths. Police officers have patrol routes on the map. SWAT responds to high-alert situations. First responders (ambulance/fire) respond to emergencies. Players in these roles receive role-specific equipment, vehicles, and mission objectives.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Make every building and house in the world enterable. Each interior must contain NPC characters, interactive objects (furniture, food items, appliances), and appropriate room layouts. This includes homes, shops, the dealership, hotels, resort buildings, police station, airport terminal, and party venues.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Implement social event locations on the map: parties (indoor and outdoor), pool parties, hotel events, ski resort gatherings, and rowdy street events. These locations should be active with NPC crowds, music ambiance, and interactive party props (drinks, food, music, dance floor).",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "Store player profiles, friend relationships, settings, and game progression data in the Motoko backend. Expose actor methods for: creating/fetching player profiles, managing friend requests, saving/loading player settings, and tracking owned homes and vehicles.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "3d",
+  "projectName": "Maplewood",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

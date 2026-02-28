@@ -1,0 +1,261 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-build-a-roblox-style-homepage-with-trxgaming-branding-display-a-featured-game-card-for-maplewood-canada-with-a-thumbnail-title-play-count-and-a-large-play-button-style-the-homepage-with-a-dark-gaming-aesthetic-matching-roblox-s-trxgaming-creator-page-bold-fonts-neon-accent-colors-animated-banners-and-a-navigation-bar-with-logo-search-and-user-avatar-placeholder",
+      "featureTitle": "Build a Roblox-style homepage with TRXGAMING branding. Display a featured game card for 'Maplewood Canada' with a thumbnail, title, play count, and a large 'Play' button. Style the homepage with a dark gaming aesthetic matching Roblox's TRXGAMING creator page: bold fonts, neon accent colors, animated banners, and a navigation bar with logo, search, and user avatar placeholder.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/GameCard.tsx",
+        "frontend/src/components/Header.tsx",
+        "frontend/src/pages/HomePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-render-a-large-open-world-3d-map-using-three-js-react-three-fiber-representing-maplewood-canada-the-map-must-include-the-city-of-maplewood-downtown-commercial-blocks-airport-the-neighborhood-mapleville-mountain-ranges-surrounding-the-town-with-a-ski-resort-dense-forests-with-choppable-trees-rivers-lakes-and-a-swimming-beach-resort-area-the-world-should-feel-vast-use-procedural-terrain-fog-of-distance-and-lod-techniques-to-simulate-miles-of-explorable-land",
+      "featureTitle": "Render a large open-world 3D map using Three.js / React Three Fiber representing Maplewood, Canada. The map must include: the city of Maplewood (downtown, commercial blocks, airport), the neighborhood Mapleville, mountain ranges surrounding the town with a ski resort, dense forests with choppable trees, rivers, lakes, and a swimming/beach resort area. The world should feel vast — use procedural terrain, fog of distance, and LOD techniques to simulate miles of explorable land.",
+      "files": [
+        "frontend/src/components/three/BiomeZones.tsx",
+        "frontend/src/components/three/Terrain.tsx",
+        "frontend/src/components/three/World.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-player-character-controller-with-first-person-and-third-person-camera-toggle-keyboard-shortcut-or-ui-button-the-player-must-be-able-to-walk-run-jump-swim-fly-superhuman-mode-toggle-drive-vehicles-and-perform-interaction-actions-pick-up-objects-drink-consumables-eat-food-touch-interact-with-world-objects-and-npcs",
+      "featureTitle": "Implement a player character controller with first-person and third-person camera toggle (keyboard shortcut or UI button). The player must be able to walk, run, jump, swim, fly (superhuman mode toggle), drive vehicles, and perform interaction actions: pick up objects, drink consumables, eat food, touch/interact with world objects and NPCs.",
+      "files": [
+        "frontend/src/components/InteractionPrompt.tsx",
+        "frontend/src/components/three/PlayerController.tsx",
+        "frontend/src/hooks/usePlayerInput.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-populate-the-world-with-hundreds-of-npcs-each-with-distinct-ai-behavior-dialogue-lines-and-daily-routines-eating-working-walking-socializing-attending-parties-when-some-npcs-are-killed-reinforcement-npcs-spawn-and-react-flee-fight-back-or-call-for-help-depending-on-their-role-npcs-inside-every-building-and-house-must-be-present-and-active",
+      "featureTitle": "Populate the world with hundreds of NPCs, each with distinct AI behavior, dialogue lines, and daily routines (eating, working, walking, socializing, attending parties). When some NPCs are killed, reinforcement NPCs spawn and react (flee, fight back, or call for help depending on their role). NPCs inside every building and house must be present and active.",
+      "files": [
+        "frontend/src/components/three/NPCManager.tsx",
+        "frontend/src/utils/npcAI.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-ai-driven-animals-across-the-forest-mountain-and-lake-zones-some-animals-are-passive-deer-birds-fish-and-some-are-dangerous-bears-wolves-animals-roam-flee-from-the-player-or-attack-depending-on-their-type-and-proximity-include-choppable-trees-in-the-forest-that-fall-when-interacted-with",
+      "featureTitle": "Implement AI-driven animals across the forest, mountain, and lake zones. Some animals are passive (deer, birds, fish) and some are dangerous (bears, wolves). Animals roam, flee from the player, or attack depending on their type and proximity. Include choppable trees in the forest that fall when interacted with.",
+      "files": [
+        "frontend/src/components/three/AnimalManager.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-life-simulation-system-allowing-the-player-to-take-on-jobs-police-officer-swat-dealership-worker-first-responder-and-others-own-and-customize-a-home-brookhaven-inspired-but-more-realistic-have-family-relationships-with-npcs-eat-and-drink-to-manage-hunger-thirst-stats-and-engage-in-everyday-human-activities",
+      "featureTitle": "Implement a life-simulation system allowing the player to: take on jobs (police officer, SWAT, dealership worker, first responder, and others), own and customize a home (Brookhaven-inspired but more realistic), have family relationships with NPCs, eat and drink to manage hunger/thirst stats, and engage in everyday human activities.",
+      "files": [
+        "frontend/src/components/HUD.tsx",
+        "frontend/src/components/JobBoard.tsx",
+        "frontend/src/hooks/usePlayerStats.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-criminal-and-chaotic-gameplay-system-players-can-rob-npcs-and-stores-acquire-weapons-and-explosives-commit-violent-acts-and-cause-chaos-include-a-wanted-alert-level-system-that-escalates-police-npc-responses-as-the-player-commits-crimes",
+      "featureTitle": "Implement a criminal and chaotic gameplay system: players can rob NPCs and stores, acquire weapons and explosives, commit violent acts, and cause chaos. Include a wanted/alert level system that escalates police NPC responses as the player commits crimes.",
+      "files": [
+        "frontend/src/components/WantedLevelIndicator.tsx",
+        "frontend/src/hooks/useWantedLevel.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-comprehensive-vehicle-system-with-land-vehicles-cars-trucks-motorcycles-sea-vehicles-boats-jet-skis-and-air-vehicles-helicopters-planes-include-a-car-dealership-building-where-the-player-can-browse-purchase-and-optionally-work-as-an-employee-the-airport-supports-plane-and-helicopter-takeoff-landing",
+      "featureTitle": "Implement a comprehensive vehicle system with land vehicles (cars, trucks, motorcycles), sea vehicles (boats, jet skis), and air vehicles (helicopters, planes). Include a car dealership building where the player can browse, purchase, and optionally work as an employee. The airport supports plane and helicopter takeoff/landing.",
+      "files": [
+        "frontend/src/components/three/VehicleManager.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-weapons-and-accessories-system-spanning-multiple-time-periods-historical-modern-futuristic-include-melee-weapons-firearms-explosives-and-superhuman-abilities-players-can-equip-accessories-clothing-armor-gadgets-display-an-inventory-loadout-ui-for-managing-equipped-items",
+      "featureTitle": "Implement a weapons and accessories system spanning multiple time periods (historical, modern, futuristic). Include melee weapons, firearms, explosives, and superhuman abilities. Players can equip accessories (clothing, armor, gadgets). Display an inventory/loadout UI for managing equipped items.",
+      "files": [
+        "frontend/src/components/InventoryUI.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-social-features-system-including-a-friends-list-add-remove-players-a-social-feed-or-profile-page-per-player-in-game-text-chat-global-and-proximity-and-a-voice-chat-indicator-ui-the-social-system-should-feel-like-an-in-game-social-network-similar-to-roblox-s-friend-system",
+      "featureTitle": "Build a social features system including: a friends list (add/remove players), a social feed or profile page per player, in-game text chat (global and proximity), and a voice chat indicator UI. The social system should feel like an in-game social network similar to Roblox's friend system.",
+      "files": [
+        "frontend/src/components/ChatUI.tsx",
+        "frontend/src/components/FriendsList.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-settings-panel-accessible-from-the-main-menu-and-in-game-pause-menu-settings-must-include-violence-toggle-on-off-camera-mode-default-first-third-person-graphics-quality-chat-preferences-and-controls-remapping-persist-player-settings-in-backend-stable-storage",
+      "featureTitle": "Implement a settings panel accessible from the main menu and in-game pause menu. Settings must include: violence toggle (on/off), camera mode default (first/third person), graphics quality, chat preferences, and controls remapping. Persist player settings in backend stable storage.",
+      "files": [
+        "frontend/src/components/PauseMenu.tsx",
+        "frontend/src/components/SettingsPanel.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-13"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-bold-immersive-gaming-visual-theme-across-the-entire-frontend-use-a-dark-background-palette-with-vibrant-neon-orange-and-red-accent-colors-blocky-futuristic-typography-animated-ui-elements-hover-glows-slide-ins-and-a-hud-overlay-during-gameplay-showing-health-hunger-thirst-wanted-level-mini-map-and-equipped-item-the-style-should-evoke-a-high-energy-roblox-meets-gta-aesthetic",
+      "featureTitle": "Apply a bold, immersive gaming visual theme across the entire frontend. Use a dark background palette with vibrant neon-orange and red accent colors, blocky/futuristic typography, animated UI elements (hover glows, slide-ins), and a HUD overlay during gameplay showing health, hunger, thirst, wanted level, mini-map, and equipped item. The style should evoke a high-energy Roblox-meets-GTA aesthetic.",
+      "files": [
+        "frontend/src/components/HUD.tsx",
+        "frontend/src/components/MiniMap.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-15"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

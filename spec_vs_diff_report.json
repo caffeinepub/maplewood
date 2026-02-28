@@ -1,0 +1,279 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-28T22:15:22.730Z",
+  "summary": "The diff implements a substantial portion of the requested features including the homepage, 3D game world, player controller, NPC/animal systems, vehicle system, HUD, inventory, job board, settings panel, chat UI, friends list, and backend Motoko actor. However, several specific acceptance criteria and requirements have gaps or are missing entirely.",
+  "missing_requirements": [
+    {
+      "requirement": "REQ-2: LOD (Level of Detail) techniques to simulate miles of explorable land.",
+      "reason": "No LOD component or LOD management system is present in the diff. The BiomeZones and Terrain files do not reference any LOD technique.",
+      "evidence": [
+        "frontend/src/components/three/Terrain.tsx",
+        "frontend/src/components/three/BiomeZones.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-2: Swimming/beach resort area explicitly present as a distinct zone.",
+      "reason": "BiomeZones.tsx includes buildings (hotel, ski resort) but no explicit beach/swimming resort zone is identifiable in the diff.",
+      "evidence": [
+        "frontend/src/components/three/BiomeZones.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-3: Player can swim in water bodies — dedicated swim mechanic in PlayerController.",
+      "reason": "PlayerController.tsx handles walk/run/jump/fly but no swim state or water detection logic is shown.",
+      "evidence": [
+        "frontend/src/components/three/PlayerController.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-3: Drive vehicles — PlayerController does not show vehicle entry or driving physics logic.",
+      "reason": "VehicleManager has mesh interactions but PlayerController does not show a driving state or vehicle physics loop.",
+      "evidence": [
+        "frontend/src/components/three/PlayerController.tsx",
+        "frontend/src/components/three/VehicleManager.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-4: NPCs navigate with basic pathfinding (avoid obstacles, enter/exit buildings).",
+      "reason": "NPCManager uses waypoints and lerp movement but no obstacle avoidance or building entry/exit pathfinding is evidenced.",
+      "evidence": [
+        "frontend/src/components/three/NPCManager.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-4: NPCs are present inside enterable buildings and houses.",
+      "reason": "No interior scene system or building-interior NPC placement is evidenced in the diff.",
+      "evidence": [
+        "frontend/src/components/three/BiomeZones.tsx",
+        "frontend/src/components/three/NPCManager.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-5: Choppable trees play a falling animation when chopped.",
+      "reason": "BiomeZones shows trees toggled via a chopped boolean causing the tree to disappear, but no falling animation is implemented.",
+      "evidence": [
+        "frontend/src/components/three/BiomeZones.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-6: Player can own a home and access a basic interior customization menu.",
+      "reason": "Home ownership is stored in the backend profile type but no frontend interior customization menu component is present in the diff.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "requirement": "REQ-6: Family/relationship status with NPCs can be formed through interactions.",
+      "reason": "The Relationship type exists in the backend but no frontend interaction flow for forming family/relationship bonds with NPCs is evidenced.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "requirement": "REQ-6: Job-specific activities (patrol route for police, test drives for dealership) are functional.",
+      "reason": "JobBoard lets the player select a job, but no patrol route waypoint system for police or test drive mechanic for dealership is evidenced.",
+      "evidence": [
+        "frontend/src/components/JobBoard.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-7: Police officers have a defined patrol route with waypoints on the map.",
+      "reason": "No patrol route or waypoint system for the player police role is shown in the diff.",
+      "evidence": [
+        "frontend/src/components/three/NPCManager.tsx",
+        "frontend/src/components/JobBoard.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-7: SWAT role is unlocked during high-crime events.",
+      "reason": "SWAT is selectable freely from the JobBoard without any wanted-level gate.",
+      "evidence": [
+        "frontend/src/components/JobBoard.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-7: First responders receive emergency call notifications.",
+      "reason": "No emergency notification system or dispatch UI is present in the diff.",
+      "evidence": [
+        "frontend/src/components/JobBoard.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-7: Role-specific uniforms, vehicles, and equipment are assigned on role selection.",
+      "reason": "No visual uniform change or equipment assignment on job selection is evidenced in the diff.",
+      "evidence": [
+        "frontend/src/components/JobBoard.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-8: Player can interact with NPCs to rob them.",
+      "reason": "No rob interaction prompt or robbery mechanic is evidenced; interaction prompts exist but not specifically for robbery.",
+      "evidence": [
+        "frontend/src/components/three/NPCManager.tsx",
+        "frontend/src/components/InteractionPrompt.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-8: Explosives and weapons can be used to cause destruction in the world.",
+      "reason": "Inventory includes grenades/explosives as items but no world destruction physics or destructible object system is present.",
+      "evidence": [
+        "frontend/src/components/InventoryUI.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-9: Car dealership building is enterable and displays purchasable vehicles with a purchase flow.",
+      "reason": "A dealership label exists in BiomeZones but no interior scene or purchase/browse UI for the dealership is evidenced.",
+      "evidence": [
+        "frontend/src/components/three/BiomeZones.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-9: Airport supports aircraft takeoff/landing mechanics.",
+      "reason": "Airport area is labeled but no takeoff/landing mechanic for planes or helicopters at the airport is evidenced.",
+      "evidence": [
+        "frontend/src/components/three/BiomeZones.tsx",
+        "frontend/src/components/three/VehicleManager.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-9: Vehicles have basic physics (acceleration, turning, collision).",
+      "reason": "VehicleManager shows static parked vehicles with click-to-enter prompts but no driving physics loop is shown.",
+      "evidence": [
+        "frontend/src/components/three/VehicleManager.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-10: Entering any building transitions seamlessly to an interior scene with unique room layouts.",
+      "reason": "No interior scene system or building-entry transition is evidenced in the diff.",
+      "evidence": [
+        "frontend/src/components/three/BiomeZones.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-10: Interactive objects (sit, eat, pick up) exist inside buildings.",
+      "reason": "No interior interactive objects are evidenced since no interior system exists in the diff.",
+      "evidence": [
+        "frontend/src/components/three/BiomeZones.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-11: Weapons have distinct attack animations and effects.",
+      "reason": "Inventory items are listed with icons but no attack animation system in the 3D world is evidenced.",
+      "evidence": [
+        "frontend/src/components/InventoryUI.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-11: Accessories can be equipped and visually appear on the player character mesh.",
+      "reason": "Accessories can be toggled in InventoryUI but PlayerController shows no accessory visual attachment on the player mesh.",
+      "evidence": [
+        "frontend/src/components/InventoryUI.tsx",
+        "frontend/src/components/three/PlayerController.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-12: Friends can be invited to join the same game session.",
+      "reason": "FriendsList shows add/remove friends but no session invite functionality is present.",
+      "evidence": [
+        "frontend/src/components/FriendsList.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-13: Controls remapping in the settings panel.",
+      "reason": "SettingsPanel has a CONTROLS tab but the truncated diff only shows a tab label with no actual key remapping UI evidenced.",
+      "evidence": [
+        "frontend/src/components/SettingsPanel.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-14: Ski resort has skiable slopes with a player ski mechanic.",
+      "reason": "Ski resort is present as a zone/building but no skiing mechanic or slope interaction is implemented in PlayerController.",
+      "evidence": [
+        "frontend/src/components/three/BiomeZones.tsx",
+        "frontend/src/components/three/PlayerController.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-14: Hotel lobbies are enterable with a check-in NPC.",
+      "reason": "Hotel building exists in BiomeZones but no interior entry or check-in NPC interaction is evidenced.",
+      "evidence": [
+        "frontend/src/components/three/BiomeZones.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-14: Pool area accessible with swimming interaction.",
+      "reason": "No pool area or swimming interaction specific to a pool/resort is evidenced.",
+      "evidence": [
+        "frontend/src/components/three/BiomeZones.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-16: acceptFriend backend method is exposed.",
+      "reason": "addFriend and removeFriend are referenced in frontend queries but acceptFriend for pending-to-accepted state transitions is not clearly evidenced in the truncated backend.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/FriendsList.tsx"
+      ]
+    },
+    {
+      "requirement": "REQ-16: Friend request state (pending, accepted) is tracked in stable storage.",
+      "reason": "The backend uses a simple Set for friends without a pending/accepted state distinction visible in the truncated diff.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "A dealer NPC role is included in NPC spawn configuration beyond the specified roles.",
+      "reason": "The build request specifies civilian, worker, shop owner, party-goer, and police NPC types. A dealer role was not requested.",
+      "evidence": [
+        "frontend/src/components/three/NPCManager.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.62,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/ChatUI.tsx",
+    "frontend/src/components/FriendsList.tsx",
+    "frontend/src/components/GameCard.tsx",
+    "frontend/src/components/HUD.tsx",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/InteractionPrompt.tsx",
+    "frontend/src/components/InventoryUI.tsx",
+    "frontend/src/components/JobBoard.tsx",
+    "frontend/src/components/MiniMap.tsx",
+    "frontend/src/components/PauseMenu.tsx",
+    "frontend/src/components/ProfileSetupModal.tsx",
+    "frontend/src/components/SettingsPanel.tsx",
+    "frontend/src/components/WantedLevelIndicator.tsx",
+    "frontend/src/components/three/AnimalManager.tsx",
+    "frontend/src/components/three/BiomeZones.tsx",
+    "frontend/src/components/three/NPCManager.tsx",
+    "frontend/src/components/three/PlayerController.tsx",
+    "frontend/src/components/three/Terrain.tsx",
+    "frontend/src/components/three/VehicleManager.tsx",
+    "frontend/src/components/three/World.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/usePlayerInput.ts",
+    "frontend/src/hooks/usePlayerStats.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/hooks/useWantedLevel.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/GameView.tsx",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/utils/npcAI.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}
