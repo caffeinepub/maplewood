@@ -39,6 +39,10 @@ function AppContent() {
   }, []);
 
   const handlePlayShips = () => setCurrentView("ships");
+  const handlePlayMaplewood = () => {
+    setCurrentView("maplewood");
+    window.location.hash = "#maplewood";
+  };
   const handleExitShips = () => {
     setCurrentView("home");
     window.history.pushState({}, "", window.location.pathname);
@@ -54,6 +58,7 @@ function AppContent() {
       <GamePlayerPage
         title={selectedGame.title}
         src={selectedGame.src}
+        fallbackSrc={selectedGame.fallbackSrc}
         onBack={() => setSelectedGame(null)}
       />
     );
@@ -78,6 +83,7 @@ function AppContent() {
       {showProfileSetup && <ProfileSetupModal />}
       <HomePage
         onPlayShips={handlePlayShips}
+        onPlayMaplewood={handlePlayMaplewood}
         onPlayGame={(game) => setSelectedGame(game)}
       />
       <Toaster />

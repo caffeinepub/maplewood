@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import {
   Anchor,
   Gamepad2,
+  MapPin,
   Play,
   Star,
   Target,
@@ -64,6 +65,7 @@ const GENRE_COLORS: Record<string, string> = {
   purple:
     "from-purple-900/60 to-purple-950/40 border-purple-500/40 hover:border-purple-400/60",
   blue: "from-blue-900/60 to-blue-950/40 border-blue-500/40 hover:border-blue-400/60",
+  teal: "from-teal-900/60 to-teal-950/40 border-teal-500/40 hover:border-teal-400/60",
 };
 
 const BADGE_COLORS: Record<string, string> = {
@@ -73,6 +75,7 @@ const BADGE_COLORS: Record<string, string> = {
   yellow: "bg-yellow-500/20 text-yellow-300 border-yellow-500/40",
   purple: "bg-purple-500/20 text-purple-300 border-purple-500/40",
   blue: "bg-blue-500/20 text-blue-300 border-blue-500/40",
+  teal: "bg-teal-500/20 text-teal-300 border-teal-500/40",
 };
 
 const BUTTON_COLORS: Record<string, string> = {
@@ -82,9 +85,14 @@ const BUTTON_COLORS: Record<string, string> = {
   yellow: "bg-yellow-600 hover:bg-yellow-500",
   purple: "bg-purple-600 hover:bg-purple-500",
   blue: "bg-blue-600 hover:bg-blue-500",
+  teal: "bg-teal-600 hover:bg-teal-500",
 };
 
-export default function HomePage({ onPlayShips, onPlayGame }: HomePageProps) {
+export default function HomePage({
+  onPlayShips,
+  onPlayMaplewood,
+  onPlayGame,
+}: HomePageProps) {
   const [previewActive, setPreviewActive] = useState(false);
 
   return (
@@ -250,6 +258,67 @@ export default function HomePage({ onPlayShips, onPlayGame }: HomePageProps) {
                 </p>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Maplewood Section */}
+        <section className="mb-14" data-ocid="maplewood.section">
+          <div className="flex items-center gap-3 mb-6">
+            <MapPin className="w-5 h-5 text-teal-400" />
+            <h2 className="font-gaming text-xl text-foreground tracking-wider">
+              <span className="text-teal-400">▶</span> MAPLEWOOD
+            </h2>
+          </div>
+          <div className="rounded-2xl border border-teal-500/30 bg-gradient-to-br from-teal-950/40 via-green-950/30 to-background p-8">
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+              <div className="flex-1">
+                <Badge className="bg-teal-500/20 text-teal-300 border-teal-500/40 font-gaming text-xs tracking-widest mb-3">
+                  OPEN WORLD
+                </Badge>
+                <h3 className="font-gaming text-2xl text-white mb-2">
+                  Maplewood City
+                </h3>
+                <p className="text-white/50 text-sm max-w-lg leading-relaxed mb-4">
+                  Explore a vast open-world city. Drive vehicles, interact with
+                  NPCs, complete missions, and survive in this 3D browser-based
+                  world. Full mobile touch controls included.
+                </p>
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {["Open World", "3D", "Mobile", "Missions", "Vehicles"].map(
+                    (tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs text-teal-300/70 bg-teal-900/30 border border-teal-700/30 rounded px-2 py-0.5"
+                      >
+                        {tag}
+                      </span>
+                    ),
+                  )}
+                </div>
+                <Button
+                  onClick={onPlayMaplewood}
+                  size="lg"
+                  className="bg-teal-600 hover:bg-teal-500 text-white font-gaming tracking-widest px-8 h-12 shadow-lg shadow-teal-900/50"
+                  data-ocid="maplewood.play_button"
+                >
+                  <Play className="w-5 h-5 mr-2 fill-white" />
+                  PLAY MAPLEWOOD
+                </Button>
+              </div>
+              <div className="hidden md:block w-48 h-32 rounded-xl bg-gradient-to-br from-teal-900/50 to-green-950/50 border border-teal-700/30 flex items-center justify-center shrink-0 overflow-hidden">
+                <div
+                  className="w-full h-full"
+                  style={{
+                    background:
+                      "radial-gradient(ellipse at 50% 80%, oklch(0.3 0.1 160) 0%, oklch(0.15 0.05 160) 60%, transparent 100%)",
+                  }}
+                >
+                  <div className="w-full h-full flex items-center justify-center">
+                    <MapPin className="w-12 h-12 text-teal-400/40" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 

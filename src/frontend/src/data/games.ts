@@ -4,6 +4,7 @@ export interface PopularGame {
   genre: string;
   color: string;
   src: string;
+  fallbackSrc?: string;
 }
 
 export const POPULAR_GAMES: PopularGame[] = [
@@ -12,41 +13,41 @@ export const POPULAR_GAMES: PopularGame[] = [
     title: "Moto X3M",
     genre: "Racing",
     color: "orange",
-    src: "https://html5.gamedistribution.com/6e875a3882b24a6c857a599c65b3e5f6/",
+    src: "https://www.crazygames.com/embed/moto-x3m",
   },
   {
-    id: "bulletforce",
-    title: "Bullet Force",
-    genre: "Shooter",
-    color: "red",
-    src: "https://html5.gamedistribution.com/9b96df03af864c3781374d0a4efb7e85/",
-  },
-  {
-    id: "cuttherope",
-    title: "Cut the Rope",
-    genre: "Puzzle",
-    color: "green",
-    src: "https://html5.gamedistribution.com/87ab34f3bd3447d8adbbc3d96b88c407/",
-  },
-  {
-    id: "crossyroad",
-    title: "Crossy Road",
-    genre: "Casual",
-    color: "yellow",
-    src: "https://html5.gamedistribution.com/0d6d360538694b4a9e0f7e16cb74e7f3/",
-  },
-  {
-    id: "subwaysurfers",
-    title: "Subway Surfers",
-    genre: "Runner",
-    color: "purple",
-    src: "https://html5.gamedistribution.com/SubwaySurfersWeb/",
-  },
-  {
-    id: "stickmanhook",
+    id: "stickman-hook",
     title: "Stickman Hook",
     genre: "Action",
     color: "blue",
-    src: "https://html5.gamedistribution.com/2d2438c2cf3e48e7b7edde47f0b3d58a/",
+    src: "https://www.crazygames.com/embed/stickman-hook",
+  },
+  {
+    id: "cut-the-rope",
+    title: "Cut the Rope",
+    genre: "Puzzle",
+    color: "green",
+    src: "https://www.crazygames.com/embed/cut-the-rope-remastered",
+  },
+  {
+    id: "bullet-force",
+    title: "Bullet Force",
+    genre: "Shooter",
+    color: "red",
+    src: "https://www.crazygames.com/embed/bullet-force-multiplayer",
+  },
+  {
+    id: "drift-boss",
+    title: "Drift Boss",
+    genre: "Racing",
+    color: "yellow",
+    src: "https://www.crazygames.com/embed/drift-boss",
+  },
+  {
+    id: "soccer-random",
+    title: "Soccer Random",
+    genre: "Sports",
+    color: "purple",
+    src: "https://www.crazygames.com/embed/soccer-random",
   },
 ];
