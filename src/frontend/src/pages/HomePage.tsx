@@ -218,7 +218,7 @@ export default function HomePage({
                 height="100%"
                 frameBorder="0"
                 allowFullScreen
-                allow="autoplay; fullscreen; keyboard"
+                allow="autoplay *; fullscreen *; keyboard; microphone; camera; encrypted-media"
                 title="Ships 3D Preview"
                 style={{ display: "block", border: "none" }}
               />

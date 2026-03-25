@@ -67,7 +67,7 @@ export default function ShipsGamePage({ onBack }: ShipsGamePageProps) {
           frameBorder="0"
           scrolling="no"
           allowFullScreen
-          allow="autoplay; fullscreen; keyboard"
+          allow="autoplay *; fullscreen *; keyboard; microphone; camera; encrypted-media"
           title="Ships 3D"
           style={{ display: "block", border: "none" }}
           onError={handleError}

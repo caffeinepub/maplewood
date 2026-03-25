@@ -1,41 +1,29 @@
-# Maplewood / TRXGAMING Homepage Enhancements
+# Maplewood Gaming Portal
 
 ## Current State
-- Homepage (HomePage.tsx) shows Ships 3D as featured game with hero banner, stats, features section, and a CTA.
-- ShipsGamePage.tsx opens Ships 3D in a fullscreen iframe with primary/fallback URLs.
-- App.tsx routes between home, ships, and maplewood (hidden via #maplewood hash).
-- Maplewood (GameView.tsx) exists but has no mobile touch controls optimization.
-- No "More Games" section exists on the homepage.
-- No per-iframe fullscreen button exists.
+- Ships 3D embedded on homepage as featured game with PLAY NOW + QUICK PREVIEW buttons
+- More Games section with 6 games using CrazyGames embed URLs (all blocked/non-functional)
+- Maplewood accessible via #maplewood hash; custom Three.js game shows black screen and non-functional buttons
+- Ships 3D iframe has allow="autoplay; fullscreen; keyboard" but sound reportedly doesn't work
 
 ## Requested Changes (Diff)
 
 ### Add
-- "More Games" section on the HomePage below the features section, showing a grid of 6 popular free online games with thumbnail, title, genre tag, and a Play button.
-- Each game card opens the game in a dedicated GamePlayerPage (similar to ShipsGamePage) that fills the screen with the game iframe.
-- Fullscreen button on every game iframe page (including Ships 3D) that calls `element.requestFullscreen()` on the iframe element to expand just the game, not the full page.
-- GamePlayerPage component: reusable page for any embedded game with title, back button, fullscreen button, and iframe with fallback support.
-- Popular games to include (using free GameDistribution or CrazyGames embeds):
-  1. Moto X3M (racing) - https://html5.gamedistribution.com/6e875a3882b24a6c857a599c65b3e5f6/
-  2. Bullet Force (shooting) - https://html5.gamedistribution.com/9b96df03af864c3781374d0a4efb7e85/
-  3. Cut the Rope Remastered (puzzle) - https://html5.gamedistribution.com/87ab34f3bd3447d8adbbc3d96b88c407/
-  4. Crossy Road (casual) - https://html5.gamedistribution.com/0d6d360538694b4a9e0f7e16cb74e7f3/
-  5. Subway Surfers (runner) - https://html5.gamedistribution.com/SubwaySurfersWeb/
-  6. Stickman Hook (action) - https://html5.gamedistribution.com/2d2438c2cf3e48e7b7edde47f0b3d58a/
+- Error boundary around the Maplewood Three.js Canvas to surface errors instead of black screen
 
 ### Modify
-- ShipsGamePage.tsx: Add fullscreen button that calls requestFullscreen on the iframe ref.
-- App.tsx: Add routing for game player pages (pass selected game data).
-- HomePage.tsx: Add "More Games" section with game cards below existing features.
-- GameView.tsx (Maplewood): Ensure VirtualJoystick and TouchActionButtons are always visible on mobile (touch devices), improve layout for small screens.
+- Replace all CrazyGames embed URLs in data/games.ts with working alternatives (.io games or direct HTML5 game URLs that allow iframe embedding)
+- Ships 3D iframes: expand `allow` attribute to include `autoplay *; fullscreen *; microphone; camera; encrypted-media` to unblock audio
+- Maplewood GameView: investigate and fix black screen (check Canvas dimensions, error handling, and common Three.js rendering issues)
 
 ### Remove
-- Nothing removed.
+- CrazyGames embed URLs (they block third-party embedding)
 
 ## Implementation Plan
-1. Create a `POPULAR_GAMES` data array with title, genre, embed URL, and color accent.
-2. Create `GamePlayerPage.tsx` - reusable fullscreen iframe page with back button and fullscreen button (using useRef + requestFullscreen API).
-3. Update `ShipsGamePage.tsx` to add fullscreen button using the same pattern.
-4. Update `App.tsx` to support a `game` view that passes the selected game to `GamePlayerPage`.
-5. Update `HomePage.tsx` to add a "More Games" section with game cards that call `onPlayGame(game)` prop.
-6. Update `GameView.tsx` (Maplewood) touch controls: ensure VirtualJoystick renders on all touch/mobile devices, fix layout so HUD and controls fit small screens.
+1. Update `src/frontend/src/data/games.ts` — replace all CrazyGames URLs with embeddable .io games or GameDistribution URLs:
+   - Use .io games: Venge.io (shooter), Krunker.io (FPS), Paper.io 2 (strategy), Wormate.io (snake), Little Big Snake (MMO), Shell Shockers (shooter)
+   - Or use GameDistribution for Moto X3M: `https://html5.gamedistribution.com/31d9dc9f1ef74b57817bf5e7f62c1432/`
+2. Update Ships 3D iframe `allow` attribute in `ShipsGamePage.tsx` and the preview iframe in `HomePage.tsx` to include `autoplay *` for sound
+3. Add React error boundary around Canvas in `GameView.tsx` to catch and display Three.js errors
+4. Review `GameView.tsx` canvas setup — ensure the Canvas fills the viewport and has correct gl context settings
+5. Validate and build

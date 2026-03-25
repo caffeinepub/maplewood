@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { GameJob, Variant_firstPerson_thirdPerson } from "../backend";
 import ChatUI from "../components/ChatUI";
 import FirstResponderMissionPanel from "../components/FirstResponderMissionPanel";
+import GameErrorBoundary from "../components/GameErrorBoundary";
 import HUD from "../components/HUD";
 import InteractionPrompt from "../components/InteractionPrompt";
 import InventoryUI from "../components/InventoryUI";
@@ -204,216 +205,221 @@ export default function GameView({ onExit }: GameViewProps) {
   const isParamedic = isFirstResponder; // firstResponder covers both paramedic and firefighter
 
   return (
-    <div
-      className="fixed inset-0 bg-black overflow-hidden"
-      style={{ touchAction: "none" }}
-    >
-      {/* 3D Canvas */}
-      <KeyboardControls map={KEY_MAP}>
-        <Canvas
-          shadows
-          camera={{ fov: 75, near: 0.1, far: 600, position: [0, 5, 10] }}
-          gl={{
-            antialias: true,
-            powerPreference: "high-performance",
-            shadowMapType: THREE.PCFSoftShadowMap,
-          }}
-          style={{ width: "100vw", height: "100vh", display: "block" }}
-        >
-          <World
-            playerPos={playerPosRef}
-            wantedLevel={wantedLevel}
-            violenceEnabled={violenceEnabled}
-            onInteract={handleInteract}
-            playerJob={currentJob ?? GameJob.unemployed}
-            isInsideBuilding={isInsideBuilding}
-            currentBuildingType={currentBuildingType}
-            onEnterBuilding={handleEnterBuilding}
-            onExitBuilding={handleExitBuilding}
-            onPickupItem={handlePickupItem}
-            onArrestNPC={handleArrestNPC}
-            onHealNPC={handleHealNPC}
-          />
-          <PlayerController
-            playerPosRef={playerPosRef}
-            cameraMode={cameraMode}
-            flightEnabled={flightEnabled}
-            paused={anyModalOpen}
-            onInteract={handleInteract}
-            onEat={eat}
-            onDrink={drink}
-            onTakeDamage={takeDamage}
-            onAddWanted={addWanted}
-            isTouchDevice={isTouchDevice}
-            joystick={joystick}
-            touchActions={touchActions}
-            cameraTouch={cameraTouch}
-            onResetCameraDelta={resetCameraDelta}
-          />
-          {/* Patrol route rendered inside canvas for police job */}
-          {isPoliceJob && !isInsideBuilding && (
-            <PolicePatrolRoute
-              playerPosition={playerPosRef}
-              onWaypointReached={handlePatrolWaypoint}
+    <GameErrorBoundary onExit={onExit}>
+      <div
+        className="fixed inset-0 bg-black overflow-hidden"
+        style={{ touchAction: "none" }}
+      >
+        {/* 3D Canvas */}
+        <KeyboardControls map={KEY_MAP}>
+          <Canvas
+            shadows
+            camera={{ fov: 75, near: 0.1, far: 600, position: [0, 5, 10] }}
+            gl={{
+              antialias: true,
+              powerPreference: "high-performance",
+              shadowMapType: THREE.PCFSoftShadowMap,
+            }}
+            style={{ width: "100vw", height: "100vh", display: "block" }}
+            onCreated={({ gl }) => {
+              gl.setClearColor(0x111111);
+            }}
+          >
+            <World
+              playerPos={playerPosRef}
+              wantedLevel={wantedLevel}
+              violenceEnabled={violenceEnabled}
+              onInteract={handleInteract}
+              playerJob={currentJob ?? GameJob.unemployed}
+              isInsideBuilding={isInsideBuilding}
+              currentBuildingType={currentBuildingType}
+              onEnterBuilding={handleEnterBuilding}
+              onExitBuilding={handleExitBuilding}
+              onPickupItem={handlePickupItem}
+              onArrestNPC={handleArrestNPC}
+              onHealNPC={handleHealNPC}
             />
-          )}
-        </Canvas>
-      </KeyboardControls>
+            <PlayerController
+              playerPosRef={playerPosRef}
+              cameraMode={cameraMode}
+              flightEnabled={flightEnabled}
+              paused={anyModalOpen}
+              onInteract={handleInteract}
+              onEat={eat}
+              onDrink={drink}
+              onTakeDamage={takeDamage}
+              onAddWanted={addWanted}
+              isTouchDevice={isTouchDevice}
+              joystick={joystick}
+              touchActions={touchActions}
+              cameraTouch={cameraTouch}
+              onResetCameraDelta={resetCameraDelta}
+            />
+            {/* Patrol route rendered inside canvas for police job */}
+            {isPoliceJob && !isInsideBuilding && (
+              <PolicePatrolRoute
+                playerPosition={playerPosRef}
+                onWaypointReached={handlePatrolWaypoint}
+              />
+            )}
+          </Canvas>
+        </KeyboardControls>
 
-      {/* HUD */}
-      {!anyModalOpen && (
-        <HUD
-          health={stats.health}
-          hunger={stats.hunger}
-          thirst={stats.thirst}
-          armor={stats.armor}
-          wantedLevel={wantedLevel}
-          playerPos={{ x: playerPosRef.current.x, z: playerPosRef.current.z }}
-          equippedItem={equippedItem}
-          job={profile?.currentJob}
-        />
-      )}
-
-      {/* Career Mission Panels */}
-      {!anyModalOpen && isPoliceJob && (
-        <div
-          className="fixed top-0 right-0 z-30 pointer-events-none"
-          style={{ top: "60px" }}
-        >
-          <PoliceMissionPanel
-            arrestCount={arrestCount}
-            patrolProgress={patrolProgress}
-            jobProgress={jobProgress ?? null}
-            onMissionComplete={(type) =>
-              handleInteract(`Mission complete: ${type}!`)
-            }
-          />
-        </div>
-      )}
-      {!anyModalOpen && isSWATJob && (
-        <div
-          className="fixed top-0 right-0 z-30 pointer-events-none"
-          style={{ top: "60px" }}
-        >
-          <SWATMissionPanel
+        {/* HUD */}
+        {!anyModalOpen && (
+          <HUD
+            health={stats.health}
+            hunger={stats.hunger}
+            thirst={stats.thirst}
+            armor={stats.armor}
             wantedLevel={wantedLevel}
-            operationsCompleted={operationsCompleted}
-            jobProgress={jobProgress ?? null}
-            onMissionComplete={(type) =>
-              handleInteract(`SWAT mission complete: ${type}!`)
-            }
+            playerPos={{ x: playerPosRef.current.x, z: playerPosRef.current.z }}
+            equippedItem={equippedItem}
+            job={profile?.currentJob}
           />
-        </div>
-      )}
-      {!anyModalOpen && isFirstResponder && (
-        <div
-          className="fixed top-0 right-0 z-30 pointer-events-none"
-          style={{ top: "60px" }}
-        >
-          <FirstResponderMissionPanel
-            role={isParamedic ? "paramedic" : "firefighter"}
-            rescueCount={rescueCount}
-            firesSuppressed={firesSuppressed}
-            jobProgress={jobProgress ?? null}
-            onMissionComplete={(type) =>
-              handleInteract(`Mission complete: ${type}!`)
-            }
+        )}
+
+        {/* Career Mission Panels */}
+        {!anyModalOpen && isPoliceJob && (
+          <div
+            className="fixed top-0 right-0 z-30 pointer-events-none"
+            style={{ top: "60px" }}
+          >
+            <PoliceMissionPanel
+              arrestCount={arrestCount}
+              patrolProgress={patrolProgress}
+              jobProgress={jobProgress ?? null}
+              onMissionComplete={(type) =>
+                handleInteract(`Mission complete: ${type}!`)
+              }
+            />
+          </div>
+        )}
+        {!anyModalOpen && isSWATJob && (
+          <div
+            className="fixed top-0 right-0 z-30 pointer-events-none"
+            style={{ top: "60px" }}
+          >
+            <SWATMissionPanel
+              wantedLevel={wantedLevel}
+              operationsCompleted={operationsCompleted}
+              jobProgress={jobProgress ?? null}
+              onMissionComplete={(type) =>
+                handleInteract(`SWAT mission complete: ${type}!`)
+              }
+            />
+          </div>
+        )}
+        {!anyModalOpen && isFirstResponder && (
+          <div
+            className="fixed top-0 right-0 z-30 pointer-events-none"
+            style={{ top: "60px" }}
+          >
+            <FirstResponderMissionPanel
+              role={isParamedic ? "paramedic" : "firefighter"}
+              rescueCount={rescueCount}
+              firesSuppressed={firesSuppressed}
+              jobProgress={jobProgress ?? null}
+              onMissionComplete={(type) =>
+                handleInteract(`Mission complete: ${type}!`)
+              }
+            />
+          </div>
+        )}
+
+        {/* Interaction Prompt */}
+        <InteractionPrompt
+          text={interactionText}
+          visible={showInteraction && !anyModalOpen}
+        />
+
+        {/* Chat */}
+        {!anyModalOpen && !isTouchDevice && <ChatUI enabled={chatEnabled} />}
+
+        {/* Desktop top bar controls */}
+        {!anyModalOpen && !isTouchDevice && (
+          <div className="fixed top-3 right-3 z-30 flex gap-2">
+            <button
+              type="button"
+              onClick={() =>
+                setCameraMode((m) => (m === "first" ? "third" : "first"))
+              }
+              className="panel-glass rounded px-2 py-1 font-gaming text-xs text-neon-orange border border-neon-orange/30 hover:border-neon-orange/60"
+            >
+              {cameraMode === "first" ? "1ST" : "3RD"} PERSON [V]
+            </button>
+            <button
+              type="button"
+              onClick={() => setFlightEnabled((f) => !f)}
+              className={`panel-glass rounded px-2 py-1 font-gaming text-xs border ${
+                flightEnabled
+                  ? "text-neon-yellow border-neon-yellow/50"
+                  : "text-muted-foreground border-border"
+              }`}
+            >
+              {flightEnabled ? "✈ FLIGHT ON" : "✈ FLIGHT [G]"}
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowInventory(true)}
+              className="panel-glass rounded px-2 py-1 font-gaming text-xs text-muted-foreground border border-border hover:border-neon-orange/40"
+            >
+              INVENTORY [I]
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowJobBoard(true)}
+              className="panel-glass rounded px-2 py-1 font-gaming text-xs text-muted-foreground border border-border hover:border-neon-orange/40"
+            >
+              JOBS [J]
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsPaused(true)}
+              className="panel-glass rounded px-2 py-1 font-gaming text-xs text-muted-foreground border border-border hover:border-neon-orange/40"
+            >
+              MENU [ESC]
+            </button>
+          </div>
+        )}
+
+        {/* Virtual Joystick (touch only) */}
+        {!anyModalOpen && (
+          <VirtualJoystick
+            onJoystickChange={setJoystick}
+            visible={isTouchDevice && !anyModalOpen}
           />
-        </div>
-      )}
+        )}
 
-      {/* Interaction Prompt */}
-      <InteractionPrompt
-        text={interactionText}
-        visible={showInteraction && !anyModalOpen}
-      />
-
-      {/* Chat */}
-      {!anyModalOpen && !isTouchDevice && <ChatUI enabled={chatEnabled} />}
-
-      {/* Desktop top bar controls */}
-      {!anyModalOpen && !isTouchDevice && (
-        <div className="fixed top-3 right-3 z-30 flex gap-2">
-          <button
-            type="button"
-            onClick={() =>
+        {/* Touch Action Buttons (touch only) */}
+        {!anyModalOpen && (
+          <TouchActionButtons
+            visible={isTouchDevice && !anyModalOpen}
+            onAction={setAction}
+            onCameraToggle={() =>
               setCameraMode((m) => (m === "first" ? "third" : "first"))
             }
-            className="panel-glass rounded px-2 py-1 font-gaming text-xs text-neon-orange border border-neon-orange/30 hover:border-neon-orange/60"
-          >
-            {cameraMode === "first" ? "1ST" : "3RD"} PERSON [V]
-          </button>
-          <button
-            type="button"
-            onClick={() => setFlightEnabled((f) => !f)}
-            className={`panel-glass rounded px-2 py-1 font-gaming text-xs border ${
-              flightEnabled
-                ? "text-neon-yellow border-neon-yellow/50"
-                : "text-muted-foreground border-border"
-            }`}
-          >
-            {flightEnabled ? "✈ FLIGHT ON" : "✈ FLIGHT [G]"}
-          </button>
-          <button
-            type="button"
-            onClick={() => setShowInventory(true)}
-            className="panel-glass rounded px-2 py-1 font-gaming text-xs text-muted-foreground border border-border hover:border-neon-orange/40"
-          >
-            INVENTORY [I]
-          </button>
-          <button
-            type="button"
-            onClick={() => setShowJobBoard(true)}
-            className="panel-glass rounded px-2 py-1 font-gaming text-xs text-muted-foreground border border-border hover:border-neon-orange/40"
-          >
-            JOBS [J]
-          </button>
-          <button
-            type="button"
-            onClick={() => setIsPaused(true)}
-            className="panel-glass rounded px-2 py-1 font-gaming text-xs text-muted-foreground border border-border hover:border-neon-orange/40"
-          >
-            MENU [ESC]
-          </button>
-        </div>
-      )}
+            onFlightToggle={() => setFlightEnabled((f) => !f)}
+            onInventory={() => setShowInventory(true)}
+            onPause={() => setIsPaused(true)}
+          />
+        )}
 
-      {/* Virtual Joystick (touch only) */}
-      {!anyModalOpen && (
-        <VirtualJoystick
-          onJoystickChange={setJoystick}
-          visible={isTouchDevice && !anyModalOpen}
-        />
-      )}
-
-      {/* Touch Action Buttons (touch only) */}
-      {!anyModalOpen && (
-        <TouchActionButtons
-          visible={isTouchDevice && !anyModalOpen}
-          onAction={setAction}
-          onCameraToggle={() =>
-            setCameraMode((m) => (m === "first" ? "third" : "first"))
-          }
-          onFlightToggle={() => setFlightEnabled((f) => !f)}
-          onInventory={() => setShowInventory(true)}
-          onPause={() => setIsPaused(true)}
-        />
-      )}
-
-      {/* Modals */}
-      {isPaused && (
-        <PauseMenu onResume={() => setIsPaused(false)} onExit={onExit} />
-      )}
-      {showInventory && (
-        <InventoryUI
-          onClose={() => setShowInventory(false)}
-          onEquip={handleEquip}
-          flightEnabled={flightEnabled}
-          onToggleFlight={() => setFlightEnabled((f) => !f)}
-          currentJob={currentJob}
-        />
-      )}
-      {showJobBoard && <JobBoard onClose={() => setShowJobBoard(false)} />}
-    </div>
+        {/* Modals */}
+        {isPaused && (
+          <PauseMenu onResume={() => setIsPaused(false)} onExit={onExit} />
+        )}
+        {showInventory && (
+          <InventoryUI
+            onClose={() => setShowInventory(false)}
+            onEquip={handleEquip}
+            flightEnabled={flightEnabled}
+            onToggleFlight={() => setFlightEnabled((f) => !f)}
+            currentJob={currentJob}
+          />
+        )}
+        {showJobBoard && <JobBoard onClose={() => setShowJobBoard(false)} />}
+      </div>
+    </GameErrorBoundary>
   );
 }
