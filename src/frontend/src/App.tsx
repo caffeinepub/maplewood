@@ -6,7 +6,6 @@ import type { PopularGame } from "./data/games";
 import { useInternetIdentity } from "./hooks/useInternetIdentity";
 import { useGetCallerUserProfile } from "./hooks/useQueries";
 import GamePlayerPage from "./pages/GamePlayerPage";
-import GameView from "./pages/GameView";
 import HomePage from "./pages/HomePage";
 import ShipsGamePage from "./pages/ShipsGamePage";
 
@@ -26,7 +25,6 @@ function AppContent() {
   const showProfileSetup =
     isAuthenticated && !profileLoading && isFetched && userProfile === null;
 
-  // Secret Maplewood access via URL hash
   useEffect(() => {
     const checkRoute = () => {
       if (window.location.hash === "#maplewood") {
@@ -50,9 +48,9 @@ function AppContent() {
   const handleExitMaplewood = () => {
     setCurrentView("home");
     window.location.hash = "";
+    setSelectedGame(null);
   };
 
-  // Selected popular game takes priority
   if (selectedGame) {
     return (
       <GamePlayerPage
@@ -72,7 +70,11 @@ function AppContent() {
     return (
       <>
         {showProfileSetup && <ProfileSetupModal />}
-        <GameView onExit={handleExitMaplewood} />
+        <GamePlayerPage
+          title="Maplewood Canada"
+          src="/maplewood/"
+          onBack={handleExitMaplewood}
+        />
         <Toaster />
       </>
     );

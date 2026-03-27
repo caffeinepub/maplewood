@@ -1,17 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Anchor,
-  Gamepad2,
-  MapPin,
-  Play,
-  Star,
-  Target,
-  Trophy,
-  Users,
-  Waves,
-  Zap,
-} from "lucide-react";
+import { Gamepad2, MapPin, Play, Users, Zap } from "lucide-react";
 import { useState } from "react";
 import Header from "../components/Header";
 import { POPULAR_GAMES, type PopularGame } from "../data/games";
@@ -22,50 +11,18 @@ interface HomePageProps {
   onPlayGame?: (game: PopularGame) => void;
 }
 
-const STATS = [
-  { label: "Online Now", value: "8,241", icon: Users },
-  { label: "Total Battles", value: "420K+", icon: Target },
-  { label: "Rating", value: "4.8", icon: Star },
-  { label: "Fleet Types", value: "12+", icon: Anchor },
-];
-
-const WAVE_LINES = [0, 1, 2, 3, 4, 5];
-
-const FEATURES = [
-  {
-    icon: Anchor,
-    title: "Fleet Command",
-    desc: "Command destroyers, battleships, carriers and submarines across open ocean.",
-  },
-  {
-    icon: Waves,
-    title: "Dynamic Ocean",
-    desc: "Realistic 3D water physics with weather effects, waves and storms.",
-  },
-  {
-    icon: Target,
-    title: "Naval Combat",
-    desc: "Cannons, torpedoes, missiles and depth charges. Sink or be sunk.",
-  },
-  {
-    icon: Trophy,
-    title: "Multiplayer",
-    desc: "Battle real players worldwide. Climb the global leaderboard.",
-  },
-];
-
 const GENRE_COLORS: Record<string, string> = {
   orange:
-    "from-orange-900/60 to-orange-950/40 border-orange-500/40 hover:border-orange-400/60",
-  red: "from-red-900/60 to-red-950/40 border-red-500/40 hover:border-red-400/60",
+    "from-orange-900/50 to-orange-950/30 border-orange-500/30 hover:border-orange-400/60",
+  red: "from-red-900/50 to-red-950/30 border-red-500/30 hover:border-red-400/60",
   green:
-    "from-green-900/60 to-green-950/40 border-green-500/40 hover:border-green-400/60",
+    "from-green-900/50 to-green-950/30 border-green-500/30 hover:border-green-400/60",
   yellow:
-    "from-yellow-900/60 to-yellow-950/40 border-yellow-500/40 hover:border-yellow-400/60",
+    "from-yellow-900/50 to-yellow-950/30 border-yellow-500/30 hover:border-yellow-400/60",
   purple:
-    "from-purple-900/60 to-purple-950/40 border-purple-500/40 hover:border-purple-400/60",
-  blue: "from-blue-900/60 to-blue-950/40 border-blue-500/40 hover:border-blue-400/60",
-  teal: "from-teal-900/60 to-teal-950/40 border-teal-500/40 hover:border-teal-400/60",
+    "from-purple-900/50 to-purple-950/30 border-purple-500/30 hover:border-purple-400/60",
+  blue: "from-blue-900/50 to-blue-950/30 border-blue-500/30 hover:border-blue-400/60",
+  teal: "from-teal-900/50 to-teal-950/30 border-teal-500/30 hover:border-teal-400/60",
 };
 
 const BADGE_COLORS: Record<string, string> = {
@@ -93,243 +50,160 @@ export default function HomePage({
   onPlayMaplewood,
   onPlayGame,
 }: HomePageProps) {
-  const [previewActive, setPreviewActive] = useState(false);
+  const [shipsGlow, setShipsGlow] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-[#080810] text-foreground">
       <Header />
 
-      <section className="relative pt-14 overflow-hidden">
-        <div className="relative h-[560px] md:h-[640px] bg-gradient-to-b from-slate-900 via-blue-950 to-background">
-          <div className="absolute inset-0 overflow-hidden">
-            <div
-              className="absolute inset-0 opacity-30"
-              style={{
-                background:
-                  "radial-gradient(ellipse at 20% 60%, oklch(0.35 0.12 240) 0%, transparent 60%), radial-gradient(ellipse at 80% 40%, oklch(0.25 0.1 220) 0%, transparent 50%)",
-              }}
-            />
-            {WAVE_LINES.map((i) => (
-              <div
-                key={`wave-${i}`}
-                className="absolute left-0 right-0 h-px opacity-20"
-                style={{
-                  top: `${30 + i * 12}%`,
-                  background:
-                    "linear-gradient(90deg, transparent, oklch(0.7 0.15 220), transparent)",
-                  animationDelay: `${i * 0.4}s`,
-                }}
-              />
-            ))}
-          </div>
+      {/* Hero — Maplewood */}
+      <section
+        className="relative pt-14 overflow-hidden"
+        data-ocid="hero.section"
+      >
+        <div className="relative">
+          <div
+            className="w-full h-[520px] md:h-[640px] bg-cover bg-center relative"
+            style={{
+              backgroundImage:
+                "url('/assets/generated/maplewood-thumbnail.dim_800x450.png')",
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-[#080810]/95 via-[#080810]/70 to-[#080810]/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#080810] via-transparent to-transparent" />
 
-          <div className="absolute inset-0 flex items-center">
-            <div className="px-6 md:px-16 max-w-3xl">
-              <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/40 font-gaming text-xs mb-4 tracking-widest">
-                FEATURED GAME
-              </Badge>
-              <h1 className="font-gaming text-5xl md:text-7xl font-black text-white mb-3 leading-tight">
-                SHIPS
-                <span className="block text-blue-400">3D</span>
-              </h1>
-              <p className="text-white/60 text-sm md:text-base mb-6 max-w-lg leading-relaxed">
-                Command a naval fleet in full 3D multiplayer combat. Sink enemy
-                warships, dodge torpedoes, and dominate the open ocean. No
-                download required.
-              </p>
+            <div className="absolute inset-0 flex items-center">
+              <div className="px-6 md:px-16 max-w-2xl">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="inline-block w-2 h-2 rounded-full bg-[#00ff88] animate-pulse" />
+                  <span className="text-[#00ff88] font-gaming text-xs tracking-[0.3em] uppercase">
+                    Featured Game
+                  </span>
+                </div>
 
-              <div className="flex flex-wrap gap-3 mb-8">
-                {STATS.map(({ label, value, icon: Icon }) => (
-                  <div
-                    key={label}
-                    className="panel-glass rounded-lg px-3 py-2 flex items-center gap-2"
-                  >
-                    <Icon className="w-4 h-4 text-blue-400" />
-                    <div>
-                      <div className="font-gaming text-sm text-blue-400">
-                        {value}
-                      </div>
-                      <div className="text-xs text-white/40">{label}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                <Button
-                  onClick={onPlayShips}
-                  size="lg"
-                  className="bg-blue-600 hover:bg-blue-500 text-white font-gaming text-base tracking-widest px-8 h-12 shadow-lg shadow-blue-900/50"
-                  data-ocid="home.primary_button"
+                <h1
+                  className="font-gaming font-black text-white leading-none mb-2"
+                  style={{ fontSize: "clamp(2.5rem, 8vw, 5rem)" }}
                 >
-                  <Play className="w-5 h-5 mr-2 fill-white" />
+                  MAPLEWOOD
+                </h1>
+                <h2
+                  className="font-gaming font-bold text-[#00ff88] tracking-widest text-lg md:text-2xl mb-6"
+                  style={{ textShadow: "0 0 20px #00ff8880" }}
+                >
+                  CANADA
+                </h2>
+
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {[
+                    "OPEN WORLD",
+                    "MOBILE READY",
+                    "MULTIPLAYER COMING SOON",
+                  ].map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs font-gaming text-[#00b4ff]/80 border border-[#00b4ff]/30 bg-[#00b4ff]/10 rounded px-2 py-1 tracking-wider"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <Button
+                  onClick={onPlayMaplewood}
+                  size="lg"
+                  className="font-gaming text-base tracking-widest px-10 h-14 text-black font-bold shadow-2xl transition-all duration-200 hover:scale-105"
+                  style={{
+                    background: "linear-gradient(135deg, #00ff88, #00cc70)",
+                    boxShadow: "0 0 30px #00ff8860, 0 4px 20px #00ff8840",
+                  }}
+                  data-ocid="hero.primary_button"
+                >
+                  <Play className="w-5 h-5 mr-2 fill-black" />
                   PLAY NOW
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={() => setPreviewActive(!previewActive)}
-                  className="border-white/20 text-white/70 font-gaming text-sm tracking-wider h-12 hover:border-blue-400/50 hover:text-white"
-                  data-ocid="home.secondary_button"
-                >
-                  {previewActive ? "HIDE PREVIEW" : "QUICK PREVIEW"}
                 </Button>
               </div>
             </div>
-          </div>
-
-          <div className="absolute right-0 bottom-0 w-1/2 h-full hidden md:flex items-end justify-center opacity-60 pointer-events-none">
-            <div
-              className="w-96 h-48 mb-8 rounded-sm opacity-80"
-              style={{
-                background:
-                  "linear-gradient(135deg, oklch(0.3 0.08 230) 0%, oklch(0.2 0.05 220) 100%)",
-                clipPath:
-                  "polygon(10% 100%, 8% 60%, 15% 55%, 20% 30%, 30% 25%, 40% 28%, 45% 20%, 55% 20%, 60% 28%, 70% 25%, 80% 30%, 85% 55%, 92% 60%, 90% 100%)",
-                boxShadow: "0 0 60px oklch(0.5 0.15 220 / 0.4)",
-              }}
-            />
           </div>
         </div>
       </section>
 
-      {previewActive && (
-        <section className="bg-black border-y border-blue-900/40">
-          <div className="max-w-screen-xl mx-auto px-4 md:px-8 py-6">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="font-gaming text-sm text-blue-400 tracking-widest">
-                GAME PREVIEW
-              </h2>
-              <button
-                type="button"
-                onClick={() => setPreviewActive(false)}
-                className="text-white/40 hover:text-white text-xs"
-              >
-                close
-              </button>
-            </div>
-            <div
-              className="rounded-xl overflow-hidden border border-blue-900/40"
-              style={{ height: 500 }}
-            >
-              <iframe
-                src="https://yp3d.com/ships3d/"
-                width="100%"
-                height="100%"
-                frameBorder="0"
-                allowFullScreen
-                allow="autoplay *; fullscreen *; keyboard; microphone; camera; encrypted-media"
-                title="Ships 3D Preview"
-                style={{ display: "block", border: "none" }}
-              />
-            </div>
-            <p className="text-center text-xs text-white/30 mt-2">
-              For the best experience,{" "}
-              <button
-                type="button"
-                onClick={onPlayShips}
-                className="text-blue-400 hover:underline"
-              >
-                Play Now
-              </button>{" "}
-              to go fullscreen
-            </p>
-          </div>
-        </section>
-      )}
-
       <main className="max-w-screen-xl mx-auto px-4 md:px-8 py-12">
-        <section className="mb-14">
-          <h2 className="font-gaming text-xl text-foreground tracking-wider mb-6">
-            <span className="text-blue-400">▶</span> GAME FEATURES
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            {FEATURES.map((feature) => (
-              <div
-                key={feature.title}
-                className="card-game rounded-xl p-5 border border-blue-900/30 hover:border-blue-500/40 transition-colors group"
+        {/* Ships 3D Featured */}
+        <section className="mb-14" data-ocid="ships.section">
+          <div className="flex items-center gap-3 mb-5">
+            <Zap className="w-5 h-5 text-[#00b4ff]" />
+            <h2 className="font-gaming text-base text-white tracking-[0.2em] uppercase">
+              <span
+                className="text-[#00b4ff]"
+                style={{ textShadow: "0 0 10px #00b4ff" }}
               >
-                <feature.icon className="w-7 h-7 text-blue-400 mb-3 group-hover:scale-110 transition-transform" />
-                <h3 className="font-gaming text-sm text-foreground mb-1">
-                  {feature.title}
-                </h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {feature.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Maplewood Section */}
-        <section className="mb-14" data-ocid="maplewood.section">
-          <div className="flex items-center gap-3 mb-6">
-            <MapPin className="w-5 h-5 text-teal-400" />
-            <h2 className="font-gaming text-xl text-foreground tracking-wider">
-              <span className="text-teal-400">▶</span> MAPLEWOOD
+                ▶
+              </span>{" "}
+              Quick Play
             </h2>
           </div>
-          <div className="rounded-2xl border border-teal-500/30 bg-gradient-to-br from-teal-950/40 via-green-950/30 to-background p-8">
-            <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-              <div className="flex-1">
-                <Badge className="bg-teal-500/20 text-teal-300 border-teal-500/40 font-gaming text-xs tracking-widest mb-3">
-                  OPEN WORLD
-                </Badge>
-                <h3 className="font-gaming text-2xl text-white mb-2">
-                  Maplewood City
-                </h3>
-                <p className="text-white/50 text-sm max-w-lg leading-relaxed mb-4">
-                  Explore a vast open-world city. Drive vehicles, interact with
-                  NPCs, complete missions, and survive in this 3D browser-based
-                  world. Full mobile touch controls included.
-                </p>
-                <div className="flex flex-wrap gap-2 mb-5">
-                  {["Open World", "3D", "Mobile", "Missions", "Vehicles"].map(
-                    (tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs text-teal-300/70 bg-teal-900/30 border border-teal-700/30 rounded px-2 py-0.5"
-                      >
-                        {tag}
-                      </span>
-                    ),
-                  )}
-                </div>
-                <Button
-                  onClick={onPlayMaplewood}
-                  size="lg"
-                  className="bg-teal-600 hover:bg-teal-500 text-white font-gaming tracking-widest px-8 h-12 shadow-lg shadow-teal-900/50"
-                  data-ocid="maplewood.play_button"
-                >
-                  <Play className="w-5 h-5 mr-2 fill-white" />
-                  PLAY MAPLEWOOD
-                </Button>
-              </div>
-              <div className="hidden md:block w-48 h-32 rounded-xl bg-gradient-to-br from-teal-900/50 to-green-950/50 border border-teal-700/30 flex items-center justify-center shrink-0 overflow-hidden">
-                <div
-                  className="w-full h-full"
-                  style={{
-                    background:
-                      "radial-gradient(ellipse at 50% 80%, oklch(0.3 0.1 160) 0%, oklch(0.15 0.05 160) 60%, transparent 100%)",
-                  }}
-                >
-                  <div className="w-full h-full flex items-center justify-center">
-                    <MapPin className="w-12 h-12 text-teal-400/40" />
-                  </div>
+
+          <div
+            className="rounded-2xl overflow-hidden border border-[#00b4ff]/20 bg-gradient-to-br from-blue-950/40 via-blue-900/10 to-[#080810] p-6 flex flex-col sm:flex-row items-center gap-6 group cursor-pointer hover:border-[#00b4ff]/50 transition-all duration-300"
+            style={{ boxShadow: shipsGlow ? "0 0 30px #00b4ff20" : "none" }}
+            onMouseEnter={() => setShipsGlow(true)}
+            onMouseLeave={() => setShipsGlow(false)}
+          >
+            <div className="w-48 h-28 rounded-xl overflow-hidden shrink-0 bg-gradient-to-br from-blue-900 to-blue-950 flex items-center justify-center">
+              <div
+                className="w-full h-full"
+                style={{
+                  background:
+                    "radial-gradient(ellipse at 50% 80%, #1e3a5f 0%, #0a1929 100%)",
+                }}
+              >
+                <div className="w-full h-full flex items-center justify-center">
+                  <span
+                    className="font-gaming text-blue-400 text-2xl font-black tracking-wider"
+                    style={{ textShadow: "0 0 20px #60a5fa" }}
+                  >
+                    SHIPS 3D
+                  </span>
                 </div>
               </div>
+            </div>
+            <div className="flex-1 text-center sm:text-left">
+              <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/40 font-gaming text-xs tracking-widest mb-3">
+                NAVAL COMBAT
+              </Badge>
+              <h3 className="font-gaming text-xl text-white mb-4">Ships 3D</h3>
+              <Button
+                onClick={onPlayShips}
+                className="font-gaming text-sm tracking-widest px-8 h-10 text-white"
+                style={{
+                  background: "linear-gradient(135deg, #00b4ff, #0080cc)",
+                  boxShadow: "0 0 20px #00b4ff50",
+                }}
+                data-ocid="ships.primary_button"
+              >
+                <Play className="w-4 h-4 mr-2 fill-white" />
+                PLAY NOW
+              </Button>
             </div>
           </div>
         </section>
 
-        {/* More Games Section */}
+        {/* More Games */}
         <section className="mb-14" data-ocid="games.section">
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-5">
             <Gamepad2 className="w-5 h-5 text-purple-400" />
-            <h2 className="font-gaming text-xl text-foreground tracking-wider">
-              <span className="text-purple-400">▶</span> MORE GAMES
+            <h2 className="font-gaming text-base text-white tracking-[0.2em] uppercase">
+              <span
+                className="text-purple-400"
+                style={{ textShadow: "0 0 10px #c084fc" }}
+              >
+                ▶
+              </span>{" "}
+              More Games
             </h2>
           </div>
+
           <div
             className="grid grid-cols-2 sm:grid-cols-3 gap-4"
             data-ocid="games.list"
@@ -341,7 +215,8 @@ export default function HomePage({
               return (
                 <div
                   key={game.id}
-                  className={`bg-gradient-to-br ${cardColor} rounded-xl p-4 border transition-all group`}
+                  className={`bg-gradient-to-br ${cardColor} rounded-xl p-4 border transition-all duration-300 group hover:-translate-y-1`}
+                  style={{ backdropFilter: "blur(4px)" }}
                   data-ocid={`games.item.${idx + 1}`}
                 >
                   <Badge
@@ -367,46 +242,56 @@ export default function HomePage({
           </div>
         </section>
 
+        {/* CTA */}
         <section className="mb-12">
-          <div className="rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-950/40 to-background p-8 text-center">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <Zap className="w-5 h-5 text-blue-400" />
-              <span className="font-gaming text-blue-400 text-sm tracking-widest">
-                READY TO BATTLE?
-              </span>
-            </div>
-            <h3 className="font-gaming text-3xl text-white mb-2">
-              JOIN THE FLEET
+          <div
+            className="rounded-2xl border border-[#00ff88]/20 p-8 text-center"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(0,255,136,0.05) 0%, rgba(0,0,0,0) 100%)",
+              boxShadow: "inset 0 0 60px rgba(0,255,136,0.03)",
+            }}
+          >
+            <Users
+              className="w-8 h-8 text-[#00ff88] mx-auto mb-3"
+              style={{ filter: "drop-shadow(0 0 8px #00ff88)" }}
+            />
+            <h3 className="font-gaming text-2xl text-white mb-2">
+              JOIN THE WORLD
             </h3>
-            <p className="text-white/50 text-sm mb-6 max-w-md mx-auto">
-              Thousands of players are competing right now. Command your
-              warships and dominate the ocean.
+            <p className="text-white/40 text-sm mb-6 max-w-md mx-auto">
+              Explore Maplewood Canada. An open-world city with crime, NPC
+              interactions, vehicles, and total freedom.
             </p>
             <Button
-              onClick={onPlayShips}
+              onClick={onPlayMaplewood}
               size="lg"
-              className="bg-blue-600 hover:bg-blue-500 text-white font-gaming tracking-widest px-10 h-12 shadow-lg shadow-blue-900/50"
-              data-ocid="home.submit_button"
+              className="font-gaming text-base tracking-widest px-10 h-12 text-black font-bold hover:scale-105 transition-transform"
+              style={{
+                background: "linear-gradient(135deg, #00ff88, #00cc70)",
+                boxShadow: "0 0 25px #00ff8860",
+              }}
+              data-ocid="cta.primary_button"
             >
-              <Anchor className="w-5 h-5 mr-2" />
-              PLAY SHIPS 3D
+              <MapPin className="w-5 h-5 mr-2" />
+              ENTER MAPLEWOOD
             </Button>
           </div>
         </section>
       </main>
 
-      <footer className="border-t border-border py-6 px-6">
+      <footer className="border-t border-white/5 py-6 px-6">
         <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
-          <span className="text-muted-foreground text-xs">
-            Ships 3D by YP3D &nbsp;·&nbsp; Hosted on TRXGAMING
+          <span className="font-gaming text-white/20 text-xs tracking-widest">
+            MAPLEWOOD GAMING PORTAL
           </span>
-          <p className="text-muted-foreground text-xs flex items-center gap-1">
-            &copy; {new Date().getFullYear()} Built with{" "}
+          <p className="text-white/20 text-xs flex items-center gap-1">
+            &copy; {new Date().getFullYear()} Built with love using{" "}
             <a
-              href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname || "trxgaming")}`}
+              href={`https://caffeine.ai/?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname || "maplewood")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-400 hover:underline"
+              className="text-[#00b4ff]/60 hover:text-[#00b4ff] transition-colors"
             >
               caffeine.ai
             </a>
