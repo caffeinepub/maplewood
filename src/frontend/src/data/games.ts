@@ -50,4 +50,12 @@ export const POPULAR_GAMES: PopularGame[] = [
     color: "yellow",
     src: "https://html5.gamedistribution.com/5c764792be5b4b0c9edd29e2a4b45015/",
   },
+  {
+    id: "tanks-3d",
+    title: "Tanks 3D",
+    genre: "Combat",
+    color: "teal",
+    src: "https://html5.gamedistribution.com/rvvASdzNYKBEBpzOBimuBF/",
+    fallbackSrc: "https://html5.gamedistribution.com/rvvASdzNYKBEBpzOBimuBF/",
+  },
 ];
